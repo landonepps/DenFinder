@@ -1,4 +1,4 @@
-package template.framework.views;
+package denfinder.framework.views;
 
 import java.io.InputStream;
 

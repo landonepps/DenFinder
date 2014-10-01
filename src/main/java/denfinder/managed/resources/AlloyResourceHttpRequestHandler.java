@@ -1,4 +1,4 @@
-package template.managed.resources;
+package denfinder.managed.resources;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -21,9 +21,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 
-import template.main.CustomEmbeddedWebApplicationContext;
-
 import com.google.common.base.Throwables;
+
+import denfinder.main.CustomEmbeddedWebApplicationContext;
 
 
 @Service("resourceHttpRequestHandler")

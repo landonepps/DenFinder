@@ -1,4 +1,4 @@
-package template.controllers;
+package denfinder.controllers;
 
 
 import org.springframework.stereotype.Controller;

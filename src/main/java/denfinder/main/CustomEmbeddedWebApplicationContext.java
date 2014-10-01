@@ -1,4 +1,4 @@
-package template.main;
+package denfinder.main;
 
 import org.springframework.boot.context.embedded.XmlEmbeddedWebApplicationContext;
 import org.springframework.core.io.Resource;

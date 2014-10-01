@@ -1,4 +1,4 @@
-package template.main;
+package denfinder.main;
 
 import org.springframework.core.io.ClassPathResource;
 
