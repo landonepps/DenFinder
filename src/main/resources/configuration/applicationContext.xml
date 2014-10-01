@@ -11,8 +11,8 @@
 		http://www.springframework.org/schema/mvc
 		http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
 		
-		<context:component-scan base-package="template.controllers"/>
-		<context:component-scan base-package="template.managed"/>
+		<context:component-scan base-package="denfinder.controllers"/>
+		<context:component-scan base-package="denfinder.managed"/>
 		
 		<mvc:annotation-driven/>
 		
@@ -25,7 +25,7 @@
 		<!--  TemplateResolver <- TemplateEngine <- ViewResolver              -->
 		<!-- **************************************************************** -->
 
-		<bean id="templateResolver" class="template.framework.views.CustomTemplateResolver">
+		<bean id="templateResolver" class="denfinder.framework.views.CustomTemplateResolver">
 			<property name="prefix" value="views/" />
 			<property name="suffix" value=".html" />
 			<property name="templateMode" value="LEGACYHTML5" />
