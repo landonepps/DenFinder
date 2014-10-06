@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
 <html class="no-js">
   <head>
     <meta charset="utf-8">
@@ -51,12 +51,12 @@
           <p class="text-center housing-form-summary">
             Let's find a neighborhood that best matches your life stage and preferences. 
           </p>
-          <form>
+          <form th:action="@{/results}" th:object="${formData}">
             <div class="form-group">
               <label for="">
                 Preferred Location
               </label>
-              <input type="text" class="form-control" placeholder="City, state or zip code" />
+              <input th:field="*{address}" type="text" class="form-control" placeholder="City, state or zip code" />
             </div>
             <div class="form-group">
               <label for="">
@@ -98,7 +98,7 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="">Importance School System Quality</label>
+              <label for="">Importance of School System Quality</label>
               <select name="" id="" class="form-control">
                 <option value="">Very Important</option>
                 <option value="">Somewhat Important</option>
