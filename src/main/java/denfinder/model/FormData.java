@@ -9,7 +9,7 @@ public class FormData {
     }
 
     public void setAddress(String address) {
-        address = address;
+        this.address = address;
     }
 
     private String address;

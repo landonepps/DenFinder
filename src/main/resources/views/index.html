@@ -51,7 +51,7 @@
           <p class="text-center housing-form-summary">
             Let's find a neighborhood that best matches your life stage and preferences. 
           </p>
-          <form th:action="@{/results}" th:object="${formData}">
+          <form th:action="@{/results}" th:object="${formData}" method="get">
             <div class="form-group">
               <label for="">
                 Preferred Location

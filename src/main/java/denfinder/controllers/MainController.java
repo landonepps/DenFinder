@@ -4,6 +4,7 @@ package denfinder.controllers;
 import denfinder.model.FormData;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -22,8 +23,8 @@ public class MainController {
 	}
 
     @RequestMapping(value="/results", method=RequestMethod.GET)
-    public String results() {
-
+    public String results(@ModelAttribute FormData formData, Model model) {
+        model.addAttribute("formData", formData);
         return "results";
     }
 }
