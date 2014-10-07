@@ -1,6 +1,8 @@
 package denfinder.controllers;
 
 
+import denfinder.model.Coordinates;
+import denfinder.model.FccApi;
 import denfinder.model.FormData;
 import denfinder.model.GeocodingApi;
 import org.springframework.stereotype.Controller;
@@ -28,7 +30,8 @@ public class MainController {
     @RequestMapping(value="/results", method=RequestMethod.GET)
     public String results(@ModelAttribute FormData formData, Model model) throws IOException {
         model.addAttribute("formData", formData);
-        GeocodingApi.getCoordinates(formData.getAddress());
+        Coordinates coords = GeocodingApi.getCoordinates(formData.getAddress());
+        String fips = FccApi.getFIPSCode(coords);
         return "results";
     }
 }

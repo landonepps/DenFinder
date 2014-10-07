@@ -8,14 +8,15 @@ import java.io.IOException;
  * Created by landon on 10/6/14.
  */
 public class FccApi {
-    public static String getFIPSCode(double lat, double lon) throws IOException {
+    public static String getFIPSCode(Coordinates coords) throws IOException {
+
         String url = "http://data.fcc.gov/api/block/find?latitude=" +
-                lat + "&longitude=" + lon +" &showall=false&format=json";
+                coords.getLatitude() + "&longitude=" + coords.getLongitude() + "&showall=false&format=json";
+
+        //TODO check for status=ok
 
         JSONObject json = ApiCall.loadJSON(url);
 
-        System.out.println(json);
-        //TODO
-        return new String();
+        return json.getJSONObject("Block").getString("FIPS");
     }
 }
