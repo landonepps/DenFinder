@@ -313,5 +313,13 @@
 		    <artifactId>xml-apis</artifactId>
 		    <version>1.4.01</version>
 		</dependency>
-	</dependencies>
+
+        <!-- JSON -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20140107</version>
+        </dependency>
+
+    </dependencies>
 </project>
