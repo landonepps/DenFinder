@@ -2,11 +2,14 @@ package denfinder.controllers;
 
 
 import denfinder.model.FormData;
+import denfinder.model.GeocodingApi;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.io.IOException;
 
 @Controller
 public class MainController {
@@ -23,8 +26,9 @@ public class MainController {
 	}
 
     @RequestMapping(value="/results", method=RequestMethod.GET)
-    public String results(@ModelAttribute FormData formData, Model model) {
+    public String results(@ModelAttribute FormData formData, Model model) throws IOException {
         model.addAttribute("formData", formData);
+        GeocodingApi.getCoordinates(formData.getAddress());
         return "results";
     }
 }
