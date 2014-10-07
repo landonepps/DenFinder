@@ -2,6 +2,7 @@ package denfinder.model;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.web.util.HtmlUtils;
 
 import java.io.IOException;
 
@@ -71,14 +72,6 @@ public class Census {
 	}
 	
 	/**
-	 * Get total pop
-	 * @return total population
-	 */
-	public int getTotalPopulation(){
-		return this.population;
-	}
-	
-	/**
 	 * Get percent homes vacant
 	 * @return percent vacant
 	 */
@@ -112,6 +105,13 @@ public class Census {
         this.housingUnits = Integer.parseInt(housing);
         this.percentVacant = Float.parseFloat(vacant);
         
+    }
+    
+    @Override
+    public String toString(){
+    	return "State: " + this.getState() + "\nFIPS Code: " + this.getFIPS() + "\nTotal Housing: "
+    			+ this.getHousingUnits() + "\nPercent Vacant: " + this.getPercentHomesVacant() + "\nToal Population: "
+    			+this.getPopulation();
     }
 	
 }
