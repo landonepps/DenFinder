@@ -1,6 +1,9 @@
 package denfinder.model;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.web.util.HtmlUtils;
+import org.springframework.web.util.UriUtils;
 
 import java.io.IOException;
 
@@ -10,14 +13,20 @@ import java.io.IOException;
 public class GeocodingApi {
     public static Coordinates getCoordinates(String address) throws IOException {
         String url = "https://maps.googleapis.com/maps/api/geocode/json?address=" +
-                address + "&sensor=false&key=AIzaSyDmW7DnNY5wR_5DI4QwmS2Zxmg0q3Ba08E";
+                UriUtils.encodeFragment(address, "UTF-8") + "&sensor=false&key=AIzaSyDmW7DnNY5wR_5DI4QwmS2Zxmg0q3Ba08E";
+
+
+        //TODO for error checking, verify status=OK
 
         JSONObject json = ApiCall.loadJSON(url);
+        JSONObject location = json.getJSONArray("results")
+                .getJSONObject(0)
+                .getJSONObject("geometry")
+                .getJSONObject("location");
 
-        System.out.println(json);
+        double latitude = location.getDouble("lat");
+        double longitude = location.getDouble("lng");
 
-
-        //TODO
-        return new Coordinates(1,1);
+        return new Coordinates(latitude, longitude);
     }
 }
