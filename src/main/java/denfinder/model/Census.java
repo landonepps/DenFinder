@@ -2,7 +2,6 @@ package denfinder.model;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.springframework.web.util.HtmlUtils;
 
 import java.io.IOException;
 
@@ -34,8 +33,9 @@ public class Census {
 	 * @throws IOException
 	 */
 	public Census(String FIPS) throws JSONException, IOException {
-		this.FIPSCode = FIPS;
+		FIPS = FIPS.substring(0, 5);
 		
+		this.FIPSCode = FIPS;
 		queryDatabase();
 	}
 	
@@ -86,25 +86,18 @@ public class Census {
 	 */
     public void queryDatabase() throws IOException, JSONException {
     	//build queries
-        String censusURLPop = new String("http://api.usatoday.com/open/census/pop?keypat="+this.FIPSCode+"&keyname=FIPS&api_key=ess47cw42vehm8jjztp8qjwp");
-        String censusURLHos = new String("http://api.usatoday.com/open/census/hou?keypat="+this.FIPSCode+"&keyname=FIPS&api_key=ess47cw42vehm8jjztp8qjwp");
+        String censusURLPop = new String("http://api.usatoday.com/open/census/pop?keypat="+this.FIPSCode+"&keyname=FIPS&sumlevid=3&api_key=ess47cw42vehm8jjztp8qjwp");
+        String censusURLHos = new String("http://api.usatoday.com/open/census/hou?keypat="+this.FIPSCode+"&keyname=FIPS&sumlevid=3&api_key=ess47cw42vehm8jjztp8qjwp");
 
         //get JSON for population data
         JSONObject censusJSONPop = ApiCall.loadJSON(censusURLPop);
-        String placename = censusJSONPop.getJSONArray("response").getJSONObject(0).getString("Placename");
-        String population = censusJSONPop.getJSONArray("response").getJSONObject(0).getString("Pop");
+        this.state = censusJSONPop.getJSONArray("response").getJSONObject(0).getString("Placename");
+        this.population = Integer.parseInt(censusJSONPop.getJSONArray("response").getJSONObject(0).getString("Pop"));
 
         //get JSON for houseing data
         JSONObject censusJSONHos = ApiCall.loadJSON(censusURLHos);
-        String housing = censusJSONHos.getJSONArray("response").getJSONObject(0).getString("HousingUnits");
-        String vacant = censusJSONHos.getJSONArray("response").getJSONObject(0).getString("PctVacant");
-
-        //set attribs
-        this.state = placename;
-        this.population = Integer.parseInt(population);
-        this.housingUnits = Integer.parseInt(housing);
-        this.percentVacant = Float.parseFloat(vacant);
-        
+        this.housingUnits = Integer.parseInt(censusJSONHos.getJSONArray("response").getJSONObject(0).getString("HousingUnits"));
+        this.percentVacant = Float.parseFloat(censusJSONHos.getJSONArray("response").getJSONObject(0).getString("PctVacant"));
     }
     
     @Override
