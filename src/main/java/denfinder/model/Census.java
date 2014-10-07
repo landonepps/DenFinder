@@ -11,19 +11,26 @@ import java.io.IOException;
  */
 public class Census {
 	
-	//total population
+	//FIPS code for this area
 	private String FIPSCode = null;
+	
+	//total population
 	private int population = -1;
+	
+	//state that contains this area
 	private String state = null;
+	
+	//number of housing units
 	private int housingUnits = -1;
+	
+	//percent housing units vacant
 	private float percentVacant = -1;
 	
 	/**
 	 * Create new census data
-	 * @param population total population
-	 * @param housing string representation of housing data
-	 * @throws IOException 
-	 * @throws JSONException 
+	 * @param FIPS fips code to query
+	 * @throws JSONException
+	 * @throws IOException
 	 */
 	public Census(String FIPS) throws JSONException, IOException {
 		this.FIPSCode = FIPS;
@@ -47,18 +54,34 @@ public class Census {
 		return housingUnits;
 	}
 	
+	/**
+	 * Get state
+	 * @return state
+	 */
 	public String getState(){
 		return this.state;
 	}
 	
+	/**
+	 * Get fips
+	 * @return fips
+	 */
 	public String getFIPS(){
 		return this.FIPSCode;
 	}
 	
+	/**
+	 * Get total pop
+	 * @return total population
+	 */
 	public int getTotalPopulation(){
 		return this.population;
 	}
 	
+	/**
+	 * Get percent homes vacant
+	 * @return percent vacant
+	 */
 	public float getPercentHomesVacant(){
 		return this.percentVacant;
 	}
