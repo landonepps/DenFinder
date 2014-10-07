@@ -30,6 +30,7 @@ public class MainController {
         Coordinates coords = GeocodingApi.getCoordinates(formData.getAddress());
         String fips = FccApi.getFIPSCode(coords);
         model.addAttribute("censusData", new Census(fips));
+        model.addAttribute("educationData", new Education(coords));
         return "results";
     }
 }
