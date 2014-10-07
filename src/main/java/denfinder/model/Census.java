@@ -12,19 +12,23 @@ import java.io.IOException;
 public class Census {
 	
 	//total population
-	private int population;
-	
-	//string representation of housing data
-	private String housing;
+	private String FIPSCode = null;
+	private int population = -1;
+	private String state = null;
+	private int housingUnits = -1;
+	private float percentVacant = -1;
 	
 	/**
 	 * Create new census data
 	 * @param population total population
 	 * @param housing string representation of housing data
+	 * @throws IOException 
+	 * @throws JSONException 
 	 */
-	public Census(int population, String housing) {
-		this.population = population;
-		this.housing = housing;
+	public Census(String FIPS) throws JSONException, IOException {
+		this.FIPSCode = FIPS;
+		
+		queryDatabase();
 	}
 	
 	/**
@@ -36,81 +40,55 @@ public class Census {
 	}
 	
 	/**
-	 * Set population
-	 * @param population the total population
-	 */
-	public void setPopulation(int population) {
-		this.population = population;
-	}
-	
-	/**
 	 * Get housing data
 	 * @return Housing data
 	 */
-	public String getHousing() {
-		return housing;
+	public int getHousingUnits() {
+		return housingUnits;
+	}
+	
+	public String getState(){
+		return this.state;
+	}
+	
+	public String getFIPS(){
+		return this.FIPSCode;
+	}
+	
+	public int getTotalPopulation(){
+		return this.population;
+	}
+	
+	public float getPercentHomesVacant(){
+		return this.percentVacant;
 	}
 	
 	/**
-	 * Set housing info
-	 * @param housing housing information
+	 * Query census API and fill up this census object
+	 * @throws IOException
+	 * @throws JSONException
 	 */
-	public void setHousing(String housing) {
-		this.housing = housing;
-	}
+    public void queryDatabase() throws IOException, JSONException {
+    	//build queries
+        String censusURLPop = new String("http://api.usatoday.com/open/census/pop?keypat="+this.FIPSCode+"&keyname=FIPS&api_key=ess47cw42vehm8jjztp8qjwp");
+        String censusURLHos = new String("http://api.usatoday.com/open/census/hou?keypat="+this.FIPSCode+"&keyname=FIPS&api_key=ess47cw42vehm8jjztp8qjwp");
 
-    public static void censusDataStLvl() throws IOException, JSONException {
-
-
-        String censusURLPop = new String("http://api.usatoday.com/open/census/pop?keypat=Louisiana&keyname=placename&api_key=ess47cw42vehm8jjztp8qjwp");
-        String censusURLHos = new String("http://api.usatoday.com/open/census/hou?api_key=ess47cw42vehm8jjztp8qjwp");
-        //String educationURL = new String("http://api.education.com/service/service.php?f=getReviews&key=0eb991b50ebfafa405a4a97f750e0175&sn=sf&v=4&Reqf");
-
+        //get JSON for population data
         JSONObject censusJSONPop = ApiCall.loadJSON(censusURLPop);
         String placename = censusJSONPop.getJSONArray("response").getJSONObject(0).getString("Placename");
         String population = censusJSONPop.getJSONArray("response").getJSONObject(0).getString("Pop");
 
-
+        //get JSON for houseing data
         JSONObject censusJSONHos = ApiCall.loadJSON(censusURLHos);
         String housing = censusJSONHos.getJSONArray("response").getJSONObject(0).getString("HousingUnits");
         String vacant = censusJSONHos.getJSONArray("response").getJSONObject(0).getString("PctVacant");
 
-        float pctvacant = Float.parseFloat(vacant);
-        int vacantPercent = (int) (pctvacant * 100);
-
-        System.out.print("State: " + placename+ "\n");
-        System.out.print("Population: "+ population + "\n");
-        System.out.print("Housing Units: " + housing + "\n");
-        System.out.print("Percent Vacant: " + vacantPercent + "% \n");
-
+        //set attribs
+        this.state = placename;
+        this.population = Integer.parseInt(population);
+        this.housingUnits = Integer.parseInt(housing);
+        this.percentVacant = Float.parseFloat(vacant);
+        
     }
-    public static void censusDataCityLvl(String state) throws IOException, JSONException{
-
-
-        String censusURLPop = new String("http://api.usatoday.com/open/census/pop?keypat=" +state+"&sumlevid=4,6&api_key=ess47cw42vehm8jjztp8qjwp");
-        String censusURLHos = new String("http://api.usatoday.com/open/census/hou?keypat=VA&sumlevid=4,6&api_key=ess47cw42vehm8jjztp8qjwp");
-
-        JSONObject censusJSONPop = ApiCall.loadJSON(censusURLPop);
-        JSONObject censusJSONHos = ApiCall.loadJSON(censusURLHos);
-
-        for(int i = 0; i < censusJSONHos.getJSONArray("response").length(); i++){
-            String placename = censusJSONPop.getJSONArray("response").getJSONObject(i).getString("Placename");
-            String population = censusJSONPop.getJSONArray("response").getJSONObject(i).getString("Pop");
-            String housing = censusJSONHos.getJSONArray("response").getJSONObject(i).getString("HousingUnits");
-            String vacant = censusJSONHos.getJSONArray("response").getJSONObject(i).getString("PctVacant");
-
-            float pctvacant = Float.parseFloat(vacant);
-            int vacantPercent = (int) (pctvacant * 100);
-
-            System.out.print("State: " + state +"\n");
-            System.out.print("City: " + placename+ "\n");
-            System.out.print("Population: "+ population + "\n");
-            System.out.print("Housing Units: " + housing + "\n");
-            System.out.print("Percent Vacant: " + vacantPercent + "% \n");
-            System.out.println();
-        }
-
-    }
-	
 	
 }
