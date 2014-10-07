@@ -20,27 +20,30 @@ import java.net.URLConnection;
  */
 public class Education {
 	//rating of available education
-	private int reviewRating;
+	private double reviewRating;
 
 	/**
 	 * Create new education data
 	 * @param coords the coordinates to query
 	 */
 	public Education(Coordinates coords) throws IOException {
-        int sum = 0;
         int count = 0;
-        for(int review : EducationSchoolAvgReviews(EducationSchoolID(coords))) {
-            sum += review;
+        int sum = 0;
+        for(int rating : EducationSchoolAvgReviews(EducationSchoolID(coords))) {
+            if (rating != 0) {
+                count++;
+                sum += rating;
+            }
         }
 
-		this.reviewRating = sum/count;
+		this.reviewRating = count != 0 ? sum/count : 0;
 	}
 
 	/**
 	 * Get the rating
 	 * @return education system rating
 	 */
-	public int getReviewRating() {
+	public double getReviewRating() {
 		return reviewRating;
 	}
 
@@ -62,8 +65,7 @@ public class Education {
 
         for(int i = 0; i < s.length; i++){
 
-            String educationRevURL = new String("http://api.education.com/service/service.php?f=getReviews&key=495796837ec34a5d0c27dc770b87bdf6&%20sn=sf&v=4&nces_id="+s[i]+"&resf=json");
-            @SuppressWarnings("unused")
+            String educationRevURL = new String("http://api.education.com/service/service.php?f=getReviews&key=31aa350a664bac9e173954e6d10ad77a&%20sn=sf&v=4&nces_id="+s[i]+"&resf=json");
             JSONObject educationJSONreviewRating = new JSONObject(educationContent(educationRevURL));
             int reviewRatingNumber = educationJSONreviewRating.getJSONObject("rating").getInt("average");
             reviewRatings[i] = reviewRatingNumber;
@@ -77,7 +79,7 @@ public class Education {
 
     public static String[] EducationSchoolID(Coordinates c) throws JSONException, IOException {
 
-        String educationSchIDURL = new String("http://api.education.com/service/service.php?f=schoolSearch&key=495796837ec34a5d0c27dc770b87bdf6&%20sn=sf" +"&latitude=" + c.latitude + "&longitude=" + c.longitude + "&distance=1.5&v=4&resf=json");
+        String educationSchIDURL = new String("http://api.education.com/service/service.php?f=schoolSearch&key=31aa350a664bac9e173954e6d10ad77a&%20sn=sf" +"&latitude=" + c.latitude + "&longitude=" + c.longitude + "&distance=1.5&v=4&resf=json");
         JSONArray educationJSONid = new JSONArray(educationContent(educationSchIDURL));
         String[]  schoolIDs = new String[educationJSONid.length()];
         for(int i = 0; i < educationJSONid.length(); i++){
