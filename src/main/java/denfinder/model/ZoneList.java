@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * Contains all zone objects
+ * List of all zone objects
  * @author latch
  *
  */
