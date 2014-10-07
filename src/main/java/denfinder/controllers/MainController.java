@@ -1,18 +1,12 @@
 package denfinder.controllers;
 
-
-import denfinder.model.Census;
-import denfinder.model.Coordinates;
-import denfinder.model.FccApi;
-import denfinder.model.FormData;
-import denfinder.model.GeocodingApi;
+import denfinder.model.*;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.util.HtmlUtils;
 
 import java.io.IOException;
 
@@ -35,6 +29,7 @@ public class MainController {
         model.addAttribute("formData", formData);
         Coordinates coords = GeocodingApi.getCoordinates(formData.getAddress());
         String fips = FccApi.getFIPSCode(coords);
+        model.addAttribute("censusData", new Census(fips));
         return "results";
     }
 }
