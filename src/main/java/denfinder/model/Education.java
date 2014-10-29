@@ -91,7 +91,26 @@ public class Education {
         return schoolIDs;
 
     }
+    
+    public static Coordinates[] EducationSchoolLatLong(String state, String city) throws JSONException, IOException {
 
+        String educationSchLatLongURL = new String("http://api.education.com/service/service.php?f=schoolSearch&key=31aa350a664bac9e173954e6d10ad77a&%20sn=sf&state" + state + "&city" + city + "&resf=json");
+        JSONArray educationJSONlatlong= new JSONArray(educationContent(educationSchLatLongURL));
+        Coordinates[]  cLatLong = new String[educationJSONlatlong.length()];
+        
+        for(int i = 0; i < educationJSONlatlong.length(); i++){
+            long latitude = educationJSONid.getJSONObject(i).getJSONObject("school").getString("latitude");
+            long longitude = educationJSONid.getJSONObject(i).getJSONObject("school").getString("longitude");
+            System.out.print(latitude);
+            System.out.print(longitude);
+            System.out.println();
+            cLatLong[i].latitude = latitude;
+            cLatLong[i].longitude = longitude;
+        }
+        return cLatLong;
+
+    }
+    
     private static String educationContent(String url) throws IOException {
 
         StringBuilder content = new StringBuilder();
