@@ -96,11 +96,12 @@ public class Education {
 
         String educationSchLatLongURL = new String("http://api.education.com/service/service.php?f=schoolSearch&key=31aa350a664bac9e173954e6d10ad77a&%20sn=sf&state" + state + "&city" + city + "&resf=json");
         JSONArray educationJSONlatlong= new JSONArray(educationContent(educationSchLatLongURL));
-        Coordinates[]  cLatLong = new String[educationJSONlatlong.length()];
+        Coordinates[]  cLatLong = new Coordinates[educationJSONlatlong.length()];
         
         for(int i = 0; i < educationJSONlatlong.length(); i++){
-            long latitude = educationJSONid.getJSONObject(i).getJSONObject("school").getString("latitude");
-            long longitude = educationJSONid.getJSONObject(i).getJSONObject("school").getString("longitude");
+        	
+            long latitude = Long.valueOf(educationJSONlatlong.getJSONObject(i).getJSONObject("school").getString("latitude"));
+            long longitude = Long.valueOf(educationJSONlatlong.getJSONObject(i).getJSONObject("school").getString("longitude"));
             System.out.print(latitude);
             System.out.print(longitude);
             System.out.println();
