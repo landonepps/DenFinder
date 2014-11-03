@@ -9,28 +9,21 @@ package denfinder.model;
  */
 public class School {
 	
-	private double reviewRating;
 	private double testRating;
-	private int rateCount;
 	private double latitude, longitude;
 	private String ID;
 	
 	public School() {
-		
-		reviewRating = 0.0;
 		testRating = 0.0;
-		rateCount = 0;
 		latitude = longitude = 0.0;
 		ID = "00000";
 	}
 	
-	public School(String aID, double aReviewRating, double aTestRating,
-				  int aRateCount, double aLatitude, double aLongitude) {
+	public School(String aID, double aTestRating,
+				  double aLatitude, double aLongitude) {
 		
 		ID = aID;
-		reviewRating = aReviewRating;
 		testRating = aTestRating;
-		rateCount = aRateCount;
 		latitude = aLatitude;
 		longitude = aLongitude;
 	}
@@ -43,13 +36,9 @@ public class School {
 		ID = iD;
 	}
 
-	public double getReviewRating() {
-		return reviewRating;
-	}
+	
 
-	public void setReviewRating(double reviewRating) {
-		this.reviewRating = reviewRating;
-	}
+	
 
 	public double getTestRating() {
 		return testRating;
@@ -59,13 +48,8 @@ public class School {
 		this.testRating = testRating;
 	}
 
-	public int getRateCount() {
-		return rateCount;
-	}
+	
 
-	public void setRateCount(int rateCount) {
-		this.rateCount = rateCount;
-	}
 
 	public double getLatitude() {
 		return latitude;
