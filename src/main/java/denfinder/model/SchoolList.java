@@ -3,11 +3,19 @@
  */
 package denfinder.model;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 /**
  * @author PINTOR
@@ -137,6 +145,59 @@ public class SchoolList implements List<School> {
 	@Override
 	public <T> T[] toArray(T[] a) {
 		return schoolList.toArray(a);
+	}
+	
+	private static String educationContent(String url) throws IOException {
+
+        StringBuilder content = new StringBuilder();
+        try
+        {
+
+            URL censusURL = new URL(url);
+            URLConnection urlConnection = censusURL.openConnection();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+            String line;
+
+            while ((line = bufferedReader.readLine()) != null){
+
+                content.append(line + "\n");
+            }
+            bufferedReader.close();
+
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return content.toString();
+    }
+	
+	/**
+	 * Populate list with all schools in a zip code
+	 * @param zipcode the zipcode to use
+	 * @throws IOException 
+	 * @throws JSONException 
+	 */
+	public void populate(String zipcode) throws JSONException, IOException{
+		String educationRevURL = new String("http://api.education.com/service/service.php?f=schoolSearch&key=5c24aa159693eb8fe46c8e075e347879&sn=sf&v=4&zip="+zipcode+"&resf=json");
+        JSONArray allSchoolsInZip = new JSONArray(educationContent(educationRevURL));
+       
+        for(int i = 0; i < allSchoolsInZip.length(); i++){
+            String schoolName = allSchoolsInZip.getJSONObject(i).getJSONObject("school").getString("schoolname");
+            System.out.println("[DEBUG] Adding school to school list: " + schoolName);
+            String id;
+            double testRating,lat,lon;
+            
+            id = allSchoolsInZip.getJSONObject(i).getJSONObject("school").getString("schoolid");
+            //testRating = Double.parseDouble(allSchoolsInZip.getJSONObject(i).getJSONObject("school").getString("testrating_text"));
+            testRating = 0; //TODO: parse returned string for rating
+            lat = Double.parseDouble(allSchoolsInZip.getJSONObject(i).getJSONObject("school").getString("latitude"));
+            lon = Double.parseDouble(allSchoolsInZip.getJSONObject(i).getJSONObject("school").getString("longitude"));
+            
+            School s = new School(id,testRating,lat,lon);
+            this.add(s);
+            
+        }
 	}
 
 }
