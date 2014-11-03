@@ -189,8 +189,16 @@ public class SchoolList implements List<School> {
             double testRating,lat,lon;
             
             id = allSchoolsInZip.getJSONObject(i).getJSONObject("school").getString("schoolid");
-            //testRating = Double.parseDouble(allSchoolsInZip.getJSONObject(i).getJSONObject("school").getString("testrating_text"));
-            testRating = 0; //TODO: parse returned string for rating
+            String temp = allSchoolsInZip.getJSONObject(i).getJSONObject("school").getString("testrating_text");
+            if(temp.length() == 0){
+            	testRating = 0;
+            }
+            else{
+            
+            	testRating = Double.parseDouble((allSchoolsInZip.getJSONObject(i).getJSONObject("school").getString("testrating_text").substring(24)));
+            //testRating = 0; //TODO: parse returned string for rating
+            //System.out.print(testRating);
+            }
             lat = allSchoolsInZip.getJSONObject(i).getJSONObject("school").getDouble("latitude");
             lon = allSchoolsInZip.getJSONObject(i).getJSONObject("school").getDouble("longitude");
             
