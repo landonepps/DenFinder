@@ -27,7 +27,9 @@ public class Education {
 	 * @param coords the coordinates to query
 	 */
 	public Education(Coordinates coords) throws IOException {
-        int count = 0;
+        
+		/*
+		int count = 0;
         int sum = 0;
         for(int rating : EducationSchoolAvgReviews(EducationSchoolID(coords))) {
             if (rating != 0) {
@@ -37,6 +39,10 @@ public class Education {
         }
 
 		this.reviewRating = count != 0 ? sum/count : 0;
+		*/
+		
+		SchoolList list = new SchoolList();
+		list.populate("75093");
 	}
 
 	/**

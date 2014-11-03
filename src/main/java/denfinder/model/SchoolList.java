@@ -191,8 +191,8 @@ public class SchoolList implements List<School> {
             id = allSchoolsInZip.getJSONObject(i).getJSONObject("school").getString("schoolid");
             //testRating = Double.parseDouble(allSchoolsInZip.getJSONObject(i).getJSONObject("school").getString("testrating_text"));
             testRating = 0; //TODO: parse returned string for rating
-            lat = Double.parseDouble(allSchoolsInZip.getJSONObject(i).getJSONObject("school").getString("latitude"));
-            lon = Double.parseDouble(allSchoolsInZip.getJSONObject(i).getJSONObject("school").getString("longitude"));
+            lat = allSchoolsInZip.getJSONObject(i).getJSONObject("school").getDouble("latitude");
+            lon = allSchoolsInZip.getJSONObject(i).getJSONObject("school").getDouble("longitude");
             
             School s = new School(id,testRating,lat,lon);
             this.add(s);
