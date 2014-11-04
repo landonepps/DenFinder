@@ -16,7 +16,7 @@ public class Zone {
 	
 	//has eduacation and census data
 	private Education itsEducationData;
-	private Census itsCensusData;
+	private CensusApi itsCensusData;
 	
 	
 	/**
@@ -28,7 +28,7 @@ public class Zone {
 	 * @param itsCensusData this zone's census data
 	 */
 	public Zone(double latitude, double longitude, int rating,
-			Education itsEducationData, Census itsCensusData) {
+			Education itsEducationData, CensusApi itsCensusData) {
 		super();
 		this.latitude = latitude;
 		this.longitude = longitude;
@@ -107,7 +107,7 @@ public class Zone {
 	 * Get this zone's census data
 	 * @return census data
 	 */
-	public Census getCensusData() {
+	public CensusApi getCensusData() {
 		return itsCensusData;
 	}
 
@@ -115,7 +115,7 @@ public class Zone {
 	 * Set this zone's census data
 	 * @param censusData data to set
 	 */
-	public void setCensusData(Census censusData) {
+	public void setCensusData(CensusApi censusData) {
 		this.itsCensusData = censusData;
 	}
 	

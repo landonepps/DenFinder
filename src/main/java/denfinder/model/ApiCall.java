@@ -1,5 +1,6 @@
 package denfinder.model;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -12,10 +13,10 @@ import java.net.URLConnection;
  * Created by landon on 10/6/14.
  */
 public class ApiCall {
-
-    public static JSONObject loadJSON(String url) throws IOException {
-
-        StringBuilder content = new StringBuilder();
+	
+	private static String loadURL(String url) {
+		
+		StringBuilder content = new StringBuilder();
         try
         {
 
@@ -35,7 +36,16 @@ public class ApiCall {
         {
             e.printStackTrace();
         }
-        return new JSONObject(content.toString());
+        String cntnt = content.toString();
+        return content.toString();
+	}
+	
+    public static JSONObject loadJSON(String url) throws IOException {
+    	return new JSONObject(loadURL(url));
+    }
+    
+    public static JSONArray loadJSONArray(String url) throws IOException {
+    	return new JSONArray(loadURL(url));
     }
 }
 

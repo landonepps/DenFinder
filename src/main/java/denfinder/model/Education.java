@@ -27,7 +27,9 @@ public class Education {
 	 * @param coords the coordinates to query
 	 */
 	public Education(Coordinates coords) throws IOException {
-        int count = 0;
+        
+		/*
+		int count = 0;
         int sum = 0;
         for(int rating : EducationSchoolAvgReviews(EducationSchoolID(coords))) {
             if (rating != 0) {
@@ -37,6 +39,10 @@ public class Education {
         }
 
 		this.reviewRating = count != 0 ? sum/count : 0;
+		*/
+		
+		SchoolList list = new SchoolList();
+		list.populate("75093");
 	}
 
 	/**
@@ -91,7 +97,27 @@ public class Education {
         return schoolIDs;
 
     }
+    
+    public static Coordinates[] EducationSchoolLatLong(String state, String city) throws JSONException, IOException {
 
+        String educationSchLatLongURL = new String("http://api.education.com/service/service.php?f=schoolSearch&key=31aa350a664bac9e173954e6d10ad77a&%20sn=sf&state" + state + "&city" + city + "&resf=json");
+        JSONArray educationJSONlatlong= new JSONArray(educationContent(educationSchLatLongURL));
+        Coordinates[]  cLatLong = new Coordinates[educationJSONlatlong.length()];
+        
+        for(int i = 0; i < educationJSONlatlong.length(); i++){
+        	
+            long latitude = Long.valueOf(educationJSONlatlong.getJSONObject(i).getJSONObject("school").getString("latitude"));
+            long longitude = Long.valueOf(educationJSONlatlong.getJSONObject(i).getJSONObject("school").getString("longitude"));
+            System.out.print(latitude);
+            System.out.print(longitude);
+            System.out.println();
+            cLatLong[i].latitude = latitude;
+            cLatLong[i].longitude = longitude;
+        }
+        return cLatLong;
+
+    }
+    
     private static String educationContent(String url) throws IOException {
 
         StringBuilder content = new StringBuilder();
