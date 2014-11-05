@@ -10,6 +10,8 @@ public final class Common {
 	//API keys
 	static final String EDUCATION_KEY = "abb2d91d6c9168b709f889e2fdfdcfb3";
 	
+	static final int MAP_DIVISIONS = 5;
+	
 	// Income range multipliers
 	// Input: "Income Range"
 	static final double INCOME_MATCHING_PERCENTAGE_HIGH   = 60.0;

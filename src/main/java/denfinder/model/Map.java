@@ -19,19 +19,19 @@ public class Map {
 	private List<ArrayList<Zone>> map;
 
 	//create new list
-	public Map(Coordinates topLeft, Coordinates bottomRight, int dimensions) throws JSONException, IOException {
+	public Map(Coordinates bottomLeft, Coordinates topRight) throws JSONException, IOException {
 		this.map = new ArrayList<ArrayList<Zone>>();
 		
-		double latDiff = (bottomRight.getLatitude() - topLeft.getLatitude()) / dimensions;
-		double lonDiff = (bottomRight.getLongitude() - topLeft.getLongitude()) / dimensions;
+		double latDiff = (topRight.getLatitude() - bottomLeft.getLatitude()) / Common.MAP_DIVISIONS;
+		double lonDiff = (topRight.getLongitude() - bottomLeft.getLongitude()) / Common.MAP_DIVISIONS;
 		
 		System.out.println(" " + latDiff + " " + lonDiff);
 		
-		for (int i = 0; i < dimensions; i++) {
+		for (int i = 0; i < Common.MAP_DIVISIONS; i++) {
 			ArrayList<Zone> longitudes = new ArrayList<Zone>();
-			for (int j = 0; j < dimensions; j++) {
-				longitudes.add(new Zone(new Coordinates(topLeft.getLatitude() + latDiff * i,
-														topLeft.getLongitude() + lonDiff * j)));
+			for (int j = 0; j < Common.MAP_DIVISIONS; j++) {
+				longitudes.add(new Zone(new Coordinates(bottomLeft.getLatitude() + latDiff * i,
+														bottomLeft.getLongitude() + lonDiff * j)));
 			}
 			map.add(longitudes);
 		}

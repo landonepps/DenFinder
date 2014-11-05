@@ -33,7 +33,7 @@ public class MainController {
     	System.out.println(viewport.getLeft().getLatitude() + ", " + viewport.getLeft().getLongitude());
     	System.out.println(viewport.getRight().getLatitude() + ", " + viewport.getRight().getLongitude());
     	
-    	Map map = new Map(viewport.getLeft(), viewport.getRight(), 5);
+    	Map map = new Map(viewport.getLeft(), viewport.getRight());
     	
         model.addAttribute("formData", formData);
         //TODO just for testing
