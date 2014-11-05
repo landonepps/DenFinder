@@ -14,11 +14,10 @@
 
 <h1>Results</h1>
 <h2>Census API Data</h2>
-<!--<p th:text="'County: ' + ${censusData.State}" />-->
-<!--<p th:text="'FIPS Code: ' + ${censusData.FIPS}"/>-->
-<!--<p th:text="'Total Population: ' + ${censusData.Population}" />-->
-<!--<p th:text="'Total Housing Units: ' + ${censusData.HousingUnits}" />-->
-<!--<p th:text="'Percent Housing Units Vacant: ' + ${censusData.PercentHomesVacant} + '%'" />-->
+<p th:text="'Median Income: $' + ${censusData.MedianIncome}" />
+<p th:text="'Median Age: ' + ${censusData.MedianAge}" />
+<p th:text="'Number of Singles: ' + ${censusData.NumSingle}" />
+<p th:text="'Number Married: ' + ${censusData.NumMarried}" />
 <h2>Education API Data</h2>
 <!--<p th:text="'Average school rating: ' + ${educationData.reviewRating} + '/5.0'" />-->
 

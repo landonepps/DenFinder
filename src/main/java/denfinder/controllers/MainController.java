@@ -37,8 +37,9 @@ public class MainController {
     	
         model.addAttribute("formData", formData);
         //Coordinates coords = GeocodingApi.getCoordinates(formData.getAddress());
-        //String fips = FccApi.getFIPSCode(coords);
-        //model.addAttribute("censusData", new CensusApi(fips));
+        //TODO just for testing
+        String fips = FccApi.getFIPSCode(viewport.getLeft());
+        model.addAttribute("censusData", new CensusApi(fips));
         //model.addAttribute("educationData", new Education(coords));
         return "results";
     }
