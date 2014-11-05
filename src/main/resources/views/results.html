@@ -14,13 +14,12 @@
 
 <h1>Results</h1>
 <h2>Census API Data</h2>
-<div th:each="test : ${testList}">
-    <div th:each="testItem : ${test.subArrayList}">                                 
-            <div th:each="testItemSub : ${testItem}">
-                    <span> Get total size of "${testItemSub.name}" and store in a variable</span>
-                    <!--/*/ <th:block th:text="${#ids.seq('')}"></th:block> /*/-->
+<div th:each="mapData : ${map}">
+    <div th:each="mapRow : ${mapData}">                       
+            <div th:each="zone : ${mapRow}">
+					<p th:text="'Rating: ' + ${zone.rating}" />
             </div>
-    </div>
+     </div>
 </div>
 <!--<p th:text="'Median Income: $' + ${map.getZone(0,0).getRating}" />
 <p th:text="'Median Age: ' + ${map.getZone(0,0).MedianAge}" />
