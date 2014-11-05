@@ -33,11 +33,11 @@ public class MainController {
     	System.out.println(viewport.getLeft().getLatitude() + ", " + viewport.getLeft().getLongitude());
     	System.out.println(viewport.getRight().getLatitude() + ", " + viewport.getRight().getLongitude());
     	
-    	Map map = new Map(viewport.getLeft(), viewport.getRight());
+    	Map map = new Map(viewport.getLeft(), viewport.getRight(), formData.getIncome(), formData.getRelationship(), formData.getAge(), formData.getSchool());
     	
         model.addAttribute("formData", formData);
-        //TODO just for testing
-        model.addAttribute("map", map);
+        model.addAttribute("map", map.getRawMap());
+        
         return "results";
     }
 }

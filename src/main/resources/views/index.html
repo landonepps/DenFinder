@@ -62,7 +62,7 @@
               <label for="">
                 Income Range
               </label>
-              <select name="" id="" class="form-control">
+              <select th:field="*{income}"name="" id="" class="form-control">
                 <option value="0-25">Below $25K</option>
                 <option value="25-50">Above $25K</option>
                 <option value="50-75">Above $50K</option>
@@ -73,7 +73,7 @@
             </div>
             <div class="form-group">
               <label for="">Relationship Status</label>
-              <select name="" id="" class="form-control">
+              <select th:field="*{relationship}" name="" id="" class="form-control">
                 <option value="Single">Single</option>
                 <option value="Married">Married</option>
                 <option value="No Preference">No Preference</option>
@@ -81,7 +81,7 @@
             </div>
             <div class="form-group">
               <label for="">Age Range</label>
-              <select name="" id="" class="form-control">
+              <select th:field="*{age}" name="" id="" class="form-control">
                 <option value="13-19">Teens</option>
                 <option value="20-29">20's</option>
                 <option value="30-39">30's</option>
@@ -91,17 +91,19 @@
                 <option value="No Preference">No Preference</option>
               </select>
             </div>
+            <!--
             <div class="form-group">
               <label for="">Preferred Community Type</label>
-              <select name="" id="" class="form-control">
+              <select th:field="*{community}" name="" id="" class="form-control">
                 <option value="Suburban">Suburban</option>
                 <option value="City">City</option>
                 <option value="No Preference">No Preference</option>
               </select>
             </div>
+            -->
             <div class="form-group">
               <label for="">Importance of School System Quality</label>
-              <select name="" id="" class="form-control">
+              <select th:field="*{school}" name="" id="" class="form-control">
                 <option value="Very Important">Very Important</option>
                 <option value="Somewhat Important">Somewhat Important</option>
                 <option value="Not Very Important">Not Very Important</option>

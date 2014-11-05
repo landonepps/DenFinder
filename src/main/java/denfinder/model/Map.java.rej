@@ -1,0 +1,16 @@
+diff a/src/main/java/denfinder/model/Map.java b/src/main/java/denfinder/model/Map.java	(rejected hunks)
+@@ -59,8 +59,14 @@
+ 	}
+ 	
+ 	public void rateZone(Zone aZone) {
++		int zoneRating = 0;
+ 		
+ 		
++		
++		
++		
++		
++		aZone.setRating(zoneRating);
+ 	}
+ 	
+ }
