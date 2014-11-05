@@ -21,7 +21,7 @@ public class Map {
 	private SchoolList schoolList = new SchoolList();
 
 	//create new list
-	public Map(Coordinates bottomLeft, Coordinates topRight) throws JSONException, IOException {
+	public Map(Coordinates bottomLeft, Coordinates topRight, String income, String relationship, String age, String school) throws JSONException, IOException {
 		this.map = new ArrayList<ArrayList<Zone>>();
 		
 		double latDiff = (topRight.getLatitude() - bottomLeft.getLatitude()) / Common.MAP_DIVISIONS;
