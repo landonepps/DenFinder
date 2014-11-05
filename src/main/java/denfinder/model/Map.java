@@ -59,8 +59,14 @@ public class Map {
 	}
 	
 	public void rateZone(Zone aZone) {
+		int zoneRating = 0;
 		
 		
+		
+		
+		
+		
+		aZone.setRating(zoneRating);
 	}
 	
 }
