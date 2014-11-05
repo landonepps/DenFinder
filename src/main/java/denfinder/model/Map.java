@@ -17,6 +17,8 @@ import org.json.JSONException;
 public class Map {
 	//zones in this list
 	private List<ArrayList<Zone>> map;
+	
+	private SchoolList schoolList = new SchoolList();
 
 	//create new list
 	public Map(Coordinates bottomLeft, Coordinates topRight) throws JSONException, IOException {
@@ -26,6 +28,9 @@ public class Map {
 		double lonDiff = (topRight.getLongitude() - bottomLeft.getLongitude()) / Common.MAP_DIVISIONS;
 		
 		System.out.println(" " + latDiff + " " + lonDiff);
+		
+		String state = GeocodingApi.getState(bottomLeft);
+		schoolList.populate("", "", state, "");
 		
 		for (int i = 0; i < Common.MAP_DIVISIONS; i++) {
 			ArrayList<Zone> longitudes = new ArrayList<Zone>();

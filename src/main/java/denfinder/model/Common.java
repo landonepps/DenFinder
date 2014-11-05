@@ -8,7 +8,7 @@ package denfinder.model;
 public final class Common {
 	
 	//API keys
-	static final String EDUCATION_KEY = "abb2d91d6c9168b709f889e2fdfdcfb3";
+	static final String EDUCATION_KEY = "76b8929e74f004bf68c53ce9d350ad7f";
 	
 	static final int MAP_DIVISIONS = 5;
 	
