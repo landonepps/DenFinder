@@ -45,4 +45,19 @@ public class Map {
 		return map.get(x).get(y);
 	}
 	
+	public void rateAllZones() {
+		for (int i = 0; i < map.size(); i++) {
+			for (int j = 0; j < map.get(i).size(); j++) {
+				rateZone(map.get(i).get(j));
+			}
+		}
+	}
+	
+	public void rateZone(Zone aZone) {
+		
+		
+	}
+	
 }
+	
+
