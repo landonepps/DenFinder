@@ -50,4 +50,8 @@ public class Map {
 		return map.get(x).get(y);
 	}
 	
+	public List<ArrayList<Zone>> getRawMap() {
+		return map;
+	}
+
 }

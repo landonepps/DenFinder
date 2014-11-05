@@ -5,7 +5,6 @@ import org.json.JSONObject;
 import org.springframework.web.util.UriUtils;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 /**
  * Created by landon on 10/6/14.

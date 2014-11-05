@@ -36,7 +36,7 @@ public class MainController {
     	Map map = new Map(viewport.getLeft(), viewport.getRight(), formData.getIncome(), formData.getRelationship(), formData.getAge(), formData.getSchool());
     	
         model.addAttribute("formData", formData);
-        model.addAttribute("map", map);
+        model.addAttribute("map", map.getRawMap());
         
         return "results";
     }
