@@ -2,10 +2,7 @@ package denfinder.model;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 import org.json.JSONException;
 
@@ -17,21 +14,26 @@ import org.json.JSONException;
 public class Map {
 	//zones in this list
 	private List<ArrayList<Zone>> map;
+	
+	private SchoolList schoolList = new SchoolList();
 
 	//create new list
-	public Map(Coordinates topLeft, Coordinates bottomRight, int dimensions) throws JSONException, IOException {
+	public Map(Coordinates bottomLeft, Coordinates topRight, int dimensions) throws JSONException, IOException {
 		this.map = new ArrayList<ArrayList<Zone>>();
 		
-		double latDiff = (bottomRight.getLatitude() - topLeft.getLatitude()) / dimensions;
-		double lonDiff = (bottomRight.getLongitude() - topLeft.getLongitude()) / dimensions;
+		double latDiff = (topRight.getLatitude() - bottomLeft.getLatitude()) / dimensions;
+		double lonDiff = (topRight.getLongitude() - bottomLeft.getLongitude()) / dimensions;
 		
 		System.out.println(" " + latDiff + " " + lonDiff);
+		
+		String state = GeocodingApi.getState(bottomLeft);
+		schoolList.populate("", "", state, "");
 		
 		for (int i = 0; i < dimensions; i++) {
 			ArrayList<Zone> longitudes = new ArrayList<Zone>();
 			for (int j = 0; j < dimensions; j++) {
-				longitudes.add(new Zone(new Coordinates(topLeft.getLatitude() + latDiff * i,
-														topLeft.getLongitude() + lonDiff * j)));
+				longitudes.add(new Zone(new Coordinates(bottomLeft.getLatitude() + latDiff * i,
+														bottomLeft.getLongitude() + lonDiff * j)));
 			}
 			map.add(longitudes);
 		}
