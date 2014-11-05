@@ -172,14 +172,25 @@ public class SchoolList implements List<School> {
         return content.toString();
     }
 	
+	
+	
+	
 	/**
-	 * Populate list with all schools in a zip code
-	 * @param zipcode the zipcode to use
+	 * Populate list with all schools in a city, state, zip (must specify at least zipcode or state) 
+	 * @param city city to search (if empty ignore)
+	 * @param county county to search (if empty ignore)
+	 * @param state state to search (must not be empty if zipcode is also empty)
+	 * @param zipcode zipcode to search (must not be empty if state is also empty)
 	 * @throws IOException 
 	 * @throws JSONException 
 	 */
-	public void populate(String zipcode) throws JSONException, IOException{
-		String educationRevURL = new String("http://api.education.com/service/service.php?f=schoolSearch&key=5c24aa159693eb8fe46c8e075e347879&sn=sf&v=4&zip="+zipcode+"&resf=json");
+	public void populate(String city, String county, String state,String zipcode) throws JSONException, IOException{
+		if(state.length() == 0 && zipcode.length() == 0){
+			throw new IOException("Must specify at least state or zipcode for Education.com API");
+		}
+		
+		
+		String educationRevURL = new String("http://api.education.com/service/service.php?f=schoolSearch&key=" + Common.EDUCATION_KEY + "&sn=sf&v=4&state="+state+ "&county=" + county + "&city=" + city + "&zip=" + zipcode + "&resf=json");
         JSONArray allSchoolsInZip = new JSONArray(educationContent(educationRevURL));
        
         for(int i = 0; i < allSchoolsInZip.length(); i++){

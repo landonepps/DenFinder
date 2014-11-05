@@ -42,7 +42,7 @@ public class Education {
 		*/
 		
 		SchoolList list = new SchoolList();
-		list.populate("75093");
+		list.populate("","","","75093");
 	}
 
 	/**
