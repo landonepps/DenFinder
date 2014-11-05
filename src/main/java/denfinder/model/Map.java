@@ -50,7 +50,7 @@ public class Map {
 		return map.get(x).get(y);
 	}
 	
-<<<<<<< HEAD
+
 	public void rateAllZones() {
 		for (int i = 0; i < map.size(); i++) {
 			for (int j = 0; j < map.get(i).size(); j++) {
@@ -70,12 +70,12 @@ public class Map {
 		aZone.setRating(zoneRating);
 	}
 	
-=======
+
 	public List<ArrayList<Zone>> getRawMap() {
 		return map;
 	}
 
->>>>>>> master
+
 }
 	
 
