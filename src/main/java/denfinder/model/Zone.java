@@ -11,15 +11,17 @@ import org.json.JSONException;
  */
 public class Zone {
 	
-	//lat long pair
+	// Lat long pair representing the center of the zone
 	private Coordinates location;
 
-	//hoe good of a match is this zone?
+	// How good of a match is this zone?
 	private int rating = -1;
 	
-	//has education and census data
-	// private Education educationData;
-	// private CensusApi censusData;
+	// Census data
+    private int medianIncome;
+    private double medianAge;
+    private int numSingle;
+    private int numMarried;
 	
 	
 	/**
@@ -39,14 +41,10 @@ public class Zone {
 		String fips = FccApi.getFIPSCode(location);
 		CensusApi census = new CensusApi(fips);
 		
-		census.getMedianIncome();
-		census.getMedianAge();
-		census.getNumMarried();
-		census.getNumSingle();
-		
-		//TODO calculate rating
-		
-		//this.rating = rating;
+		setMedianIncome(census.getMedianIncome());
+		setMedianAge(census.getMedianAge());
+		setNumSingle(census.getNumSingle());
+		setNumMarried(census.getNumMarried());
 	}
 
 	/**
@@ -68,5 +66,37 @@ public class Zone {
 	
 	public void setRating(int rating) {
 		this.rating = rating;
+	}
+
+	public int getMedianIncome() {
+		return medianIncome;
+	}
+
+	public void setMedianIncome(int medianIncome) {
+		this.medianIncome = medianIncome;
+	}
+
+	public double getMedianAge() {
+		return medianAge;
+	}
+
+	public void setMedianAge(double medianAge) {
+		this.medianAge = medianAge;
+	}
+
+	public int getNumSingle() {
+		return numSingle;
+	}
+
+	public void setNumSingle(int numSingle) {
+		this.numSingle = numSingle;
+	}
+
+	public int getNumMarried() {
+		return numMarried;
+	}
+
+	public void setNumMarried(int numMarried) {
+		this.numMarried = numMarried;
 	}
 }
