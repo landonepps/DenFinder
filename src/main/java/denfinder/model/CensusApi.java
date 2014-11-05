@@ -16,19 +16,13 @@ public class CensusApi extends ApiCall {
 	
 	private String countyCode;
 	
-	private String tractCode;
+	// private String tractCode;
 	
-	//total population
-	private int population = -1;
-	
-	//state that contains this area
-	private String state;
-	
-	//number of housing units
-	private int housingUnits = -1;
-	
-	//percent housing units vacant
-	private float percentVacant = -1;
+    private int medianIncome;
+    private double medianAge;
+    private int numSingle;
+    private int numMarried;
+    
 	
 	/**
 	 * Create new census data
@@ -40,41 +34,9 @@ public class CensusApi extends ApiCall {
 		
 		this.stateCode = fips.substring(0,2);
 		this.countyCode = fips.substring(2, 5);
-		this.tractCode = fips.substring(5, 11);
+		// this.tractCode = fips.substring(5, 11);
 		
 		queryDatabase();
-	}
-	
-	/**
-	 * Get total population
-	 * @return total population
-	 */
-	public int getPopulation() {
-		return population;
-	}
-	
-	/**
-	 * Get housing data
-	 * @return Housing data
-	 */
-	public int getHousingUnits() {
-		return housingUnits;
-	}
-	
-	/**
-	 * Get state
-	 * @return state
-	 */
-	public String getState(){
-		return this.state;
-	}
-	
-	/**
-	 * Get percent homes vacant
-	 * @return percent vacant
-	 */
-	public float getPercentHomesVacant(){
-		return this.percentVacant;
 	}
 	
 	/**
@@ -84,35 +46,40 @@ public class CensusApi extends ApiCall {
 	 */
     public void queryDatabase() throws IOException, JSONException {
     	final String APIKEY = "247154b5274c2ce8ce3d4e6fbe375e33f3646afc";
-    	//build queries
-    	final String CODE = "B09019_003E,B25077_001E";
-    	String censusURL = "http://api.census.gov/data/2013/acs3?get=" + CODE + ",NAME&for=county+subdivision:" + tractCode +
-    			"&in=state:" + stateCode +"+county:" + countyCode + "&key=" + APIKEY;
- 
-        //censusURLPop = new String("http://api.usatoday.com/open/census/pop?keypat="+this.FIPSCode+"&keyname=FIPS&sumlevid=3&api_key=ess47cw42vehm8jjztp8qjwp");
-        // String censusURLHos = new String("http://api.usatoday.com/open/census/hou?keypat="+this.FIPSCode+"&keyname=FIPS&sumlevid=3&api_key=ess47cw42vehm8jjztp8qjwp");
+    	// build queries
+    	// median household income, median age, total with relationship status, never married
+    	final String CODE = "B19013_001E,B01002_001E,B12005_001E,B12005_002E";
+    	// http://api.census.gov/data/2013/acs3?get=NAME,B01001_001E&for=county:073&in=state:06&key=247154b5274c2ce8ce3d4e6fbe375e33f3646afc
+    	String censusURL = "http://api.census.gov/data/2013/acs3?get=" + CODE + "&for=county:" + countyCode +
+    			"&in=state:" + stateCode + "&key=" + APIKEY;
 
         //get JSON for population data
-        JSONArray censusJSONPop = loadJSONArray(censusURL);
+        JSONArray censusJSON = loadJSONArray(censusURL).getJSONArray(1);
+        System.out.println(censusJSON);
+        // set variables
+        medianIncome = censusJSON.getInt(0);
+        medianAge = censusJSON.getDouble(1);
+        numSingle = censusJSON.getInt(3);
+        int totalRelationship = censusJSON.getInt(2);
+        numMarried = totalRelationship - numSingle;
         
-        String json = censusJSONPop.toString();
-        
-        System.out.println(json);
-        
-        //this.state = censusJSONPop.getJSONArray("response").getJSONObject(0).getString("Placename");
-        //this.population = Integer.parseInt(censusJSONPop.getJSONArray("response").getJSONObject(0).getString("Pop"));
+        System.out.println(medianIncome + " " + medianAge + " " + numSingle + " " + numMarried);
+    }
 
-        //get JSON for housing data
-        //JSONObject censusJSONHos = ApiCall.loadJSON(censusURLHos);
-        //this.housingUnits = Integer.parseInt(censusJSONHos.getJSONArray("response").getJSONObject(0).getString("HousingUnits"));
-        //this.percentVacant = Float.parseFloat(censusJSONHos.getJSONArray("response").getJSONObject(0).getString("PctVacant"));
-    }
-    
-    @Override
-    public String toString(){
-    	return "State: " + this.getState() + "\nTotal Housing: "
-    			+ this.getHousingUnits() + "\nPercent Vacant: " + this.getPercentHomesVacant() + "\nToal Population: "
-    			+this.getPopulation();
-    }
+	public int getMedianIncome() {
+		return medianIncome;
+	}
+
+	public double getMedianAge() {
+		return medianAge;
+	}
+
+	public int getNumSingle() {
+		return numSingle;
+	}
+
+	public int getNumMarried() {
+		return numMarried;
+	}
 	
 }
