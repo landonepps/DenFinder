@@ -33,14 +33,11 @@ public class MainController {
     	System.out.println(viewport.getLeft().getLatitude() + ", " + viewport.getLeft().getLongitude());
     	System.out.println(viewport.getRight().getLatitude() + ", " + viewport.getRight().getLongitude());
     	
-    	
+    	Map map = new Map(viewport.getLeft(), viewport.getRight(), 5);
     	
         model.addAttribute("formData", formData);
-        //Coordinates coords = GeocodingApi.getCoordinates(formData.getAddress());
         //TODO just for testing
-        String fips = FccApi.getFIPSCode(viewport.getLeft());
-        model.addAttribute("censusData", new CensusApi(fips));
-        //model.addAttribute("educationData", new Education(coords));
+        model.addAttribute("map", map);
         return "results";
     }
 }
