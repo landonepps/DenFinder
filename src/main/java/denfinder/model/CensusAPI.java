@@ -43,13 +43,12 @@ public class CensusAPI extends ApiCall {
 	 * @throws JSONException
 	 */
     public void queryDatabase() throws IOException, JSONException {
-    	final String APIKEY = "247154b5274c2ce8ce3d4e6fbe375e33f3646afc";
     	// build queries
     	// median household income, median age, total with relationship status, never married
     	final String CODE = "B19013_001E,B01002_001E,B12005_001E,B12005_002E";
     	// http://api.census.gov/data/2012/acs5?get=B01001_001E,B03001_001E&for=tract:000100&in=state:01+county:073&key=247154b5274c2ce8ce3d4e6fbe375e33f3646afc
     	String censusURL = "http://api.census.gov/data/2012/acs5?get=" + CODE + "&for=tract:" + tractCode + "&in=state:" + stateCode +
-    			"+county:" + countyCode + "&key=" + APIKEY;
+    			"+county:" + countyCode + "&key=" + Common.CENSUS_KEY;
     	System.out.println(censusURL);
         //get JSON for population data
         JSONArray censusJSON = loadJSONArray(censusURL).getJSONArray(1);
