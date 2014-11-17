@@ -49,10 +49,10 @@ public class CensusAPI extends ApiCall {
     	// http://api.census.gov/data/2012/acs5?get=B01001_001E,B03001_001E&for=tract:000100&in=state:01+county:073&key=247154b5274c2ce8ce3d4e6fbe375e33f3646afc
     	String censusURL = "http://api.census.gov/data/2012/acs5?get=" + CODE + "&for=tract:" + tractCode + "&in=state:" + stateCode +
     			"+county:" + countyCode + "&key=" + Common.CENSUS_KEY;
-    	System.out.println(censusURL);
+    	//System.out.println(censusURL);
         //get JSON for population data
         JSONArray censusJSON = loadJSONArray(censusURL).getJSONArray(1);
-        System.out.println(censusJSON);
+        //System.out.println(censusJSON);
         // set variables
         medianIncome = censusJSON.getInt(0);
         medianAge = censusJSON.getDouble(1);
@@ -60,7 +60,7 @@ public class CensusAPI extends ApiCall {
         int totalRelationship = censusJSON.getInt(2);
         numMarried = totalRelationship - numSingle;
         
-        System.out.println(medianIncome + " " + medianAge + " " + numSingle + " " + numMarried);
+        //System.out.println(medianIncome + " " + medianAge + " " + numSingle + " " + numMarried);
     }
 
 	public int getMedianIncome() {

@@ -11,7 +11,7 @@ import org.json.JSONException;
  *
  */
 public class Map {
-	//zones in this list
+	// zones in this list
 	private List<ArrayList<Zone>> map;
 	
 	private SchoolList schoolList = new SchoolList();
@@ -40,6 +40,10 @@ public class Map {
 	
 	public int getDimensions() {
 		return map.size();
+	}
+	
+	public Coordinates getMiddle() {
+		return map.get(map.size()/2).get(map.get(map.size()/2).size()).getLocation();		
 	}
 	
 	public Zone getZone(int x, int y) {

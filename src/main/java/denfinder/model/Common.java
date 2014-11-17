@@ -13,7 +13,7 @@ public final class Common {
 	static final String CENSUS_KEY = "247154b5274c2ce8ce3d4e6fbe375e33f3646afc";
 	
 	// Map data
-	static final int MAP_DIVISIONS = 5;
+	static final int MAP_DIVISIONS = 10;
 	
 	
 	// Algorithm input: "Income Range"
