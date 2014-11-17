@@ -9,6 +9,7 @@ public final class Common {
 	
 	//API keys
 	static final String EDUCATION_KEY = "76b8929e74f004bf68c53ce9d350ad7f";
+	static final String GEOCODING_KEY = "AIzaSyDmW7DnNY5wR_5DI4QwmS2Zxmg0q3Ba08E";
 	
 	// Map data
 	static final int MAP_DIVISIONS = 5;

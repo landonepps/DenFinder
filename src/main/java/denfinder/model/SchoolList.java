@@ -3,11 +3,7 @@
  */
 package denfinder.model;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -147,39 +143,7 @@ public class SchoolList implements List<School> {
 		return schoolList.toArray(a);
 	}
 	
-	/**
-	 * Reads all education content from url
-	 * @param url query to read from
-	 * @return read content
-	 * @throws IOException if IO error
-	 */
-	private static String educationContent(String url) throws IOException {
-
-        StringBuilder content = new StringBuilder();
-        try
-        {
-
-            URL censusURL = new URL(url);
-            URLConnection urlConnection = censusURL.openConnection();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-            String line;
-
-            while ((line = bufferedReader.readLine()) != null){
-
-                content.append(line + "\n");
-            }
-            bufferedReader.close();
-
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-        return content.toString();
-    }
-	
-	
-	
+		
 	
 	/**
 	 * Populate list with all schools in a city, state, zip (must specify at least zipcode or state) 
@@ -196,11 +160,11 @@ public class SchoolList implements List<School> {
 		}
 				
 		//build query string
-		String educationRevURL = new String("http://api.education.com/service/service.php?f=schoolSearch&key=" + Common.EDUCATION_KEY + "&sn=sf&v=4&state="+state+ "&county=" + county + "&city=" + city + "&zip=" + zipcode + "&resf=json");
-        
+		EducationAPI anEducationAPICall = new EducationAPI("http://api.education.com/service/service.php?f=schoolSearch&key=" + Common.EDUCATION_KEY + "&sn=sf&v=4&state="+state+ "&county=" + county + "&city=" + city + "&zip=" + zipcode + "&resf=json");
+		        
 		//submit query and read results
-		JSONArray allSchoolsInZip = new JSONArray(educationContent(educationRevURL));
-       
+		JSONArray allSchoolsInZip = anEducationAPICall.getResults();
+		       
 		//process each school in results
         for(int i = 0; i < allSchoolsInZip.length(); i++){
             //data to read about each school

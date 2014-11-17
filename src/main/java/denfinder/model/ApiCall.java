@@ -36,7 +36,7 @@ public class ApiCall {
         {
             e.printStackTrace();
         }
-        String cntnt = content.toString();
+
         return content.toString();
 	}
 	
