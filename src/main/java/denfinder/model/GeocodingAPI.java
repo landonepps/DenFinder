@@ -3,7 +3,6 @@ package denfinder.model;
 import org.apache.commons.lang3.tuple.Pair;
 import org.json.JSONObject;
 import org.springframework.web.util.UriUtils;
-
 import java.io.IOException;
 
 /**
@@ -45,7 +44,7 @@ public class GeocodingAPI extends ApiCall {
     
     public static String getState(Coordinates coords) throws IOException {
     	String url = "https://maps.googleapis.com/maps/api/geocode/json?address=" +
-                UriUtils.encodeFragment(coords.getLatitude() + " " + coords.getLongitude(), "UTF-8") + "&sensor=false&key=AIzaSyDmW7DnNY5wR_5DI4QwmS2Zxmg0q3Ba08E";
+                UriUtils.encodeFragment(coords.getLatitude() + " " + coords.getLongitude(), "UTF-8") + "&sensor=false&key=" +  Common.GEOCODING_KEY;
 
         JSONObject json = loadJSON(url);
         JSONObject location = json.getJSONArray("results")
@@ -54,5 +53,15 @@ public class GeocodingAPI extends ApiCall {
                 .getJSONObject(4);
 
         return location.getString("short_name");
+    }
+    
+    public static String getZipCode(Coordinates coords) throws IOException{
+    	String url = "https://maps.googleapis.com/maps/api/geocode/json?address=" +
+                UriUtils.encodeFragment(coords.getLatitude() + " " + coords.getLongitude(), "UTF-8") + "&sensor=false&key=" + Common.GEOCODING_KEY;
+
+        JSONObject json = loadJSON(url);
+        JSONObject zipcode = json.getJSONArray("results").getJSONObject(0).getJSONArray("address_components").getJSONObject(6);
+        return zipcode.getString("short_name");
+
     }
 }
