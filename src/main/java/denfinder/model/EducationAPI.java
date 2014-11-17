@@ -18,7 +18,7 @@ import java.net.URLConnection;
  * Contains education data
  *
  */
-public class Education {
+public class EducationAPI {
 	//rating of available education
 	private double reviewRating;
 
@@ -26,7 +26,7 @@ public class Education {
 	 * Create new education data
 	 * @param coords the coordinates to query
 	 */
-	public Education(Coordinates coords) throws IOException {
+	public EducationAPI(Coordinates coords) throws IOException {
         
 		/*
 		int count = 0;

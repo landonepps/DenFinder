@@ -10,7 +10,7 @@ import java.io.IOException;
  * Census data
  *
  */
-public class CensusApi extends ApiCall {
+public class CensusAPI extends ApiCall {
 	
 	private String stateCode;
 	
@@ -30,7 +30,7 @@ public class CensusApi extends ApiCall {
 	 * @throws JSONException
 	 * @throws IOException
 	 */
-	public CensusApi(String fips) throws JSONException, IOException {
+	public CensusAPI(String fips) throws JSONException, IOException {
 		
 		this.stateCode = fips.substring(0,2);
 		this.countyCode = fips.substring(2, 5);

@@ -29,7 +29,7 @@ public class Map {
 		
 		System.out.println(" " + latDiff + " " + lonDiff);
 		
-		String state = GeocodingApi.getState(bottomLeft);
+		String state = GeocodingAPI.getState(bottomLeft);
 		schoolList.populate("", "", state, "");
 		
 		for (int i = 0; i < Common.MAP_DIVISIONS; i++) {

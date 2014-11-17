@@ -7,7 +7,7 @@ import java.io.IOException;
 /**
  * Created by landon on 10/6/14.
  */
-public class FccApi extends ApiCall {
+public class FccAPI extends ApiCall {
     public static String getFIPSCode(Coordinates coords) throws IOException {
 
         String url = "http://data.fcc.gov/api/block/find?latitude=" +

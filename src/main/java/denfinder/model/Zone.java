@@ -38,8 +38,8 @@ public class Zone {
 		super();
 		this.location = location;
 		
-		String fips = FccApi.getFIPSCode(location);
-		CensusApi census = new CensusApi(fips);
+		String fips = FccAPI.getFIPSCode(location);
+		CensusAPI census = new CensusAPI(fips);
 		
 		setMedianIncome(census.getMedianIncome());
 		setMedianAge(census.getMedianAge());

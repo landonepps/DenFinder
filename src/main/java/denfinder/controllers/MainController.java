@@ -28,7 +28,7 @@ public class MainController {
     public String results(@ModelAttribute FormData formData, Model model) throws IOException {
     	
     	Pair<Coordinates, Coordinates> viewport = 
-    						GeocodingApi.getCoordinates(formData.getAddress());
+    						GeocodingAPI.getCoordinates(formData.getAddress());
     	
     	System.out.println(viewport.getLeft().getLatitude() + ", " + viewport.getLeft().getLongitude());
     	System.out.println(viewport.getRight().getLatitude() + ", " + viewport.getRight().getLongitude());
