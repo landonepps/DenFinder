@@ -12,7 +12,7 @@ import java.io.IOException;
 public class GeocodingAPI extends ApiCall {
     public static Pair<Coordinates, Coordinates> getCoordinates(String address) throws IOException {
         String url = "https://maps.googleapis.com/maps/api/geocode/json?address=" +
-                UriUtils.encodeFragment(address, "UTF-8") + "&sensor=false&key=AIzaSyDmW7DnNY5wR_5DI4QwmS2Zxmg0q3Ba08E";
+                UriUtils.encodeFragment(address, "UTF-8") + "&sensor=false&key=" + Common.GEOCODING_KEY;
 
         //TODO for error checking, verify status=OK
 

@@ -3,11 +3,7 @@
  */
 package denfinder.model;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -147,33 +143,7 @@ public class SchoolList implements List<School> {
 		return schoolList.toArray(a);
 	}
 	
-	private static String educationContent(String url) throws IOException {
-
-        StringBuilder content = new StringBuilder();
-        try
-        {
-
-            URL censusURL = new URL(url);
-            URLConnection urlConnection = censusURL.openConnection();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-            String line;
-
-            while ((line = bufferedReader.readLine()) != null){
-
-                content.append(line + "\n");
-            }
-            bufferedReader.close();
-
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-        return content.toString();
-    }
-	
-	
-	
+		
 	
 	/**
 	 * Populate list with all schools in a city, state, zip (must specify at least zipcode or state) 
@@ -181,40 +151,45 @@ public class SchoolList implements List<School> {
 	 * @param county county to search (if empty ignore)
 	 * @param state state to search (must not be empty if zipcode is also empty)
 	 * @param zipcode zipcode to search (must not be empty if state is also empty)
-	 * @throws IOException 
-	 * @throws JSONException 
+	 * @throws IOException if IO error
+	 * @throws JSONException  if unreadable JSON format is returned
 	 */
 	public void populate(String city, String county, String state,String zipcode) throws JSONException, IOException{
 		if(state.length() == 0 && zipcode.length() == 0){
 			throw new IOException("Must specify at least state or zipcode for Education.com API");
 		}
-		
-		
-		String educationRevURL = new String("http://api.education.com/service/service.php?f=schoolSearch&key=" + Common.EDUCATION_KEY + "&sn=sf&v=4&state="+state+ "&county=" + county + "&city=" + city + "&zip=" + zipcode + "&resf=json");
-        JSONArray allSchoolsInZip = new JSONArray(educationContent(educationRevURL));
-       
+				
+		//build query string
+		EducationAPI anEducationAPICall = new EducationAPI("http://api.education.com/service/service.php?f=schoolSearch&key=" + Common.EDUCATION_KEY + "&sn=sf&v=4&state="+state+ "&county=" + county + "&city=" + city + "&zip=" + zipcode + "&resf=json");
+		        
+		//submit query and read results
+		JSONArray allSchoolsInZip = anEducationAPICall.getResults();
+		       
+		//process each school in results
         for(int i = 0; i < allSchoolsInZip.length(); i++){
-            String schoolName = allSchoolsInZip.getJSONObject(i).getJSONObject("school").getString("schoolname");
-            System.out.println("[DEBUG] Adding school to school list: " + schoolName);
-            String id;
+            //data to read about each school
+        	String schoolName,id;
             double testRating,lat,lon;
             
+            //read in data
+            schoolName = allSchoolsInZip.getJSONObject(i).getJSONObject("school").getString("schoolname");
             id = allSchoolsInZip.getJSONObject(i).getJSONObject("school").getString("schoolid");
             String temp = allSchoolsInZip.getJSONObject(i).getJSONObject("school").getString("testrating_text");
             if(temp.length() == 0){
             	testRating = 0;
             }
             else{
-            
             	testRating = Double.parseDouble((allSchoolsInZip.getJSONObject(i).getJSONObject("school").getString("testrating_text").substring(24)));
-            //testRating = 0; //TODO: parse returned string for rating
-            //System.out.print(testRating);
             }
             lat = allSchoolsInZip.getJSONObject(i).getJSONObject("school").getDouble("latitude");
             lon = allSchoolsInZip.getJSONObject(i).getJSONObject("school").getDouble("longitude");
             
-            School s = new School(id,testRating,lat,lon);
+            //create new school object and add to list
+            School s = new School(id,testRating,new Coordinates(lat,lon));
             this.add(s);
+            
+            //print debugging information
+            System.out.println("[DEBUG] Adding school to school list: " + schoolName);
             
         }
 	}

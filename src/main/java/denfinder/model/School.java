@@ -10,22 +10,22 @@ package denfinder.model;
 public class School {
 	
 	private double testRating;
-	private double latitude, longitude;
+	private Coordinates location;
 	private String ID;
 	
 	public School() {
+		//set up default values for a school
 		testRating = 0.0;
-		latitude = longitude = 0.0;
+		this.location.latitude = this.location.longitude = 0.0;
 		ID = "00000";
 	}
 	
 	public School(String aID, double aTestRating,
-				  double aLatitude, double aLongitude) {
+				  Coordinates aLocation) {
 		
 		ID = aID;
 		testRating = aTestRating;
-		latitude = aLatitude;
-		longitude = aLongitude;
+		this.location = aLocation;
 	}
 
 	public String getID() {
@@ -35,10 +35,6 @@ public class School {
 	public void setID(String iD) {
 		ID = iD;
 	}
-
-	
-
-	
 
 	public double getTestRating() {
 		return testRating;
@@ -50,21 +46,12 @@ public class School {
 
 	
 
-
-	public double getLatitude() {
-		return latitude;
+	public Coordinates getLocation() {
+		return location;
 	}
 
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
-	}
-
-	public double getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
+	public void setLocation(Coordinates newLocation) {
+		this.location = newLocation;
 	}
 	
 }
