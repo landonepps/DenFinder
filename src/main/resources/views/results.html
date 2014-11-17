@@ -14,20 +14,16 @@
 
 <h1>Results</h1>
 <h2>Census API Data</h2>
-<div th:each="test : ${testList}">
-    <div th:each="testItem : ${test.subArrayList}">                                 
-            <div th:each="testItemSub : ${testItem}">
-                    <span> Get total size of "${testItemSub.name}" and store in a variable</span>
-                    <!--/*/ <th:block th:text="${#ids.seq('')}"></th:block> /*/-->
-            </div>
+<div th:each="mapList : ${map}">
+    <div th:each="zone : ${mapList}">
+            <p th:text="'Rating: ' + ${zone.rating}" />
+            <p th:text="'Median Income: $' + ${zone.medianIncome}" />
+<p th:text="'Median Age: ' + ${zone.medianAge}" />
+<p th:text="'Number of Singles: ' + ${zone.numSingle}" />
+<p th:text="'Number Married: ' + ${zone.numMarried}" />
+<br/><br/>
     </div>
 </div>
-<!--<p th:text="'Median Income: $' + ${map.getZone(0,0).getRating}" />
-<p th:text="'Median Age: ' + ${map.getZone(0,0).MedianAge}" />
-<p th:text="'Number of Singles: ' + ${map.getZone(0,0).NumSingle}" />
-<p th:text="'Number Married: ' + ${map.getZone(0,0).NumMarried}" />
-<h2>Education API Data</h2>
-<!--<p th:text="'Average school rating: ' + ${educationData.reviewRating} + '/5.0'" />-->
 
 </body>
 </html>

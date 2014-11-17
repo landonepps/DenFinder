@@ -16,7 +16,7 @@ public class CensusAPI extends ApiCall {
 	
 	private String countyCode;
 	
-	// private String tractCode;
+	private String tractCode;
 	
     private int medianIncome;
     private double medianAge;
@@ -34,7 +34,7 @@ public class CensusAPI extends ApiCall {
 		
 		this.stateCode = fips.substring(0,2);
 		this.countyCode = fips.substring(2, 5);
-		// this.tractCode = fips.substring(5, 11);
+		this.tractCode = fips.substring(5, 11);
 		
 		queryDatabase();
 	}
@@ -49,10 +49,10 @@ public class CensusAPI extends ApiCall {
     	// build queries
     	// median household income, median age, total with relationship status, never married
     	final String CODE = "B19013_001E,B01002_001E,B12005_001E,B12005_002E";
-    	// http://api.census.gov/data/2013/acs3?get=NAME,B01001_001E&for=county:073&in=state:06&key=247154b5274c2ce8ce3d4e6fbe375e33f3646afc
-    	String censusURL = "http://api.census.gov/data/2013/acs3?get=" + CODE + "&for=county:" + countyCode +
-    			"&in=state:" + stateCode + "&key=" + APIKEY;
-
+    	// http://api.census.gov/data/2012/acs5?get=B01001_001E,B03001_001E&for=tract:000100&in=state:01+county:073&key=247154b5274c2ce8ce3d4e6fbe375e33f3646afc
+    	String censusURL = "http://api.census.gov/data/2012/acs5?get=" + CODE + "&for=tract:" + tractCode + "&in=state:" + stateCode +
+    			"+county:" + countyCode + "&key=" + APIKEY;
+    	System.out.println(censusURL);
         //get JSON for population data
         JSONArray censusJSON = loadJSONArray(censusURL).getJSONArray(1);
         System.out.println(censusJSON);
