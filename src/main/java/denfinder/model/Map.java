@@ -32,8 +32,15 @@ public class Map {
 		
 		System.out.println(" " + latDiff + " " + lonDiff);
 		
-		String state = GeocodingAPI.getState(bottomLeft);
-		schoolList.populate("", "", state, "");
+		//String state = GeocodingAPI.getState(bottomLeft);
+		String zip = GeocodingAPI.getZipCode(bottomLeft);
+		
+		//debug information
+		System.out.println("[DEBUG] Adding all schools from zip code: " + zip);
+				
+		//schoolList.populate("", "", state, "");
+		schoolList.populate("", "", "", zip);
+		
 		
 		for (int i = 0; i < Common.MAP_DIVISIONS; i++) {
 			ArrayList<Zone> longitudes = new ArrayList<Zone>();
