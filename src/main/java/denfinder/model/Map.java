@@ -34,10 +34,17 @@ public class Map {
 		
 		System.out.println(" " + latDiff + " " + lonDiff);
 		
-		//get all states currently in viewport
+		//get all states currently in viewport (all corners and center of viewpoint are tested)
+		Coordinates topLeft = new Coordinates(bottomLeft.latitude,topRight.longitude);
+		Coordinates bottomRight = new Coordinates(topRight.latitude,bottomLeft.longitude);
+		Coordinates center = new Coordinates((topLeft.latitude + topRight.latitude) / 2, (topLeft.longitude + bottomLeft.longitude)/2);
+
 		HashSet<String> states = new HashSet<String>();
 		states.add(GeocodingAPI.getState(topRight));
 		states.add(GeocodingAPI.getState(bottomLeft));
+		states.add(GeocodingAPI.getState(topLeft));
+		states.add(GeocodingAPI.getState(bottomRight));
+		states.add(GeocodingAPI.getState(center));
 		
 		//debug information
 		for(String s : states)
