@@ -15,11 +15,11 @@ import org.json.JSONException;
  * @author PINTOR
  *
  */
-public class SchoolList implements Set<School> {
+public class SchoolSet implements Set<School> {
 
 	private Set<School> schoolList;
 	
-	public SchoolList() {
+	public SchoolSet() {
 		this.schoolList = new HashSet<School>();
 	}
 	

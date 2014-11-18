@@ -22,7 +22,7 @@ public class Map {
 	String age;
 	String schoolImportance;
 	
-	private SchoolList schoolList = new SchoolList();
+	private SchoolSet schoolList = new SchoolSet();
 
 	//create new list
 	public Map(Coordinates bottomLeft, Coordinates topRight, String newIncome, String newRelationshipStatus,
