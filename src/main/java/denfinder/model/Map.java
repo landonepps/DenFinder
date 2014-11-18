@@ -2,7 +2,9 @@ package denfinder.model;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+
 import org.json.JSONException;
 
 /**
@@ -32,15 +34,16 @@ public class Map {
 		
 		System.out.println(" " + latDiff + " " + lonDiff);
 		
-		//String state = GeocodingAPI.getState(bottomLeft);
-		String zip = GeocodingAPI.getZipCode(bottomLeft);
+		//get all states currently in viewport
+		HashSet<String> states = new HashSet<String>();
+		states.add(GeocodingAPI.getState(topRight));
+		states.add(GeocodingAPI.getState(bottomLeft));
 		
 		//debug information
-		System.out.println("[DEBUG] Adding all schools from zip code: " + zip);
+		for(String s : states)
+			System.out.println("[DEBUG] Adding all schools from state: " + s);
 				
-		//schoolList.populate("", "", state, "");
-		schoolList.populate("", "", "", zip);
-		
+		schoolList.populate(states);
 		
 		for (int i = 0; i < Common.MAP_DIVISIONS; i++) {
 			ArrayList<Zone> longitudes = new ArrayList<Zone>();
