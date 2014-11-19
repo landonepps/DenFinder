@@ -98,10 +98,14 @@ public class SchoolSet implements Set<School> {
 	 */
 	public void populate(Set<String> states) throws JSONException, IOException{
 		if(states == null || states.size() == 0){
-			throw new IOException("Must specify a state for Education.com API to search");
+			throw new IOException("Must specify at least one state for Education.com API to search");
 		}
 		
-		for(String aState:states){		
+		for(String aState:states){
+			//check for empty string state
+			if(aState.length() <= 0)
+				continue;
+			
 			//build query string for a state in the set of requested states
 			EducationAPI anEducationAPICall = new EducationAPI("http://api.education.com/service/service.php?f=schoolSearch&key=" + Common.EDUCATION_KEY + "&sn=sf&v=4&state=" + aState + "&resf=json");
 		        

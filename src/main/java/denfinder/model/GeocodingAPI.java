@@ -1,8 +1,10 @@
 package denfinder.model;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.web.util.UriUtils;
+
 import java.io.IOException;
 
 /**
@@ -42,17 +44,40 @@ public class GeocodingAPI extends ApiCall {
         return viewport;
     }
     
+    /**
+     * Get the state that contains a given lon/lat
+     * @param coords lon/lat pair to test
+     * @return State that contains point or empty string if no state data found in Geocoding API
+     * @throws IOException if IO error
+     */
     public static String getState(Coordinates coords) throws IOException {
     	String url = "https://maps.googleapis.com/maps/api/geocode/json?address=" +
                 UriUtils.encodeFragment(coords.getLatitude() + " " + coords.getLongitude(), "UTF-8") + "&sensor=false&key=" +  Common.GEOCODING_KEY;
 
-        JSONObject json = loadJSON(url);
-        JSONObject location = json.getJSONArray("results")
-                .getJSONObject(0)
-                .getJSONArray("address_components")
-                .getJSONObject(4);
+        JSONObject json = loadJSON(url); 
+        String Status = json.getString("status");
+        String state = "";
+        if (Status.equalsIgnoreCase("OK")) 
+        {
+        	JSONArray Results = json.getJSONArray("results");
+        	JSONObject zero = Results.getJSONObject(0);
+        	JSONArray address_components = zero.getJSONArray("address_components");
 
-        return location.getString("short_name");
+        	for (int i = 0; i < address_components.length(); i++) 
+        	{
+        		JSONObject zero2 = address_components.getJSONObject(i);
+        		String long_name = zero2.getString("long_name");
+        		JSONArray mtypes = zero2.getJSONArray("types");
+        		String Type = mtypes.getString(0);
+
+        		if (Type.equalsIgnoreCase("administrative_area_level_1")) 
+        		{
+        			state = long_name;
+        		} 
+        	}
+        }
+          
+        return state;
     }
     
     public static String getZipCode(Coordinates coords) throws IOException{
