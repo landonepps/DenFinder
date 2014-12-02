@@ -80,6 +80,10 @@ public class Map {
 		return map.get(x).get(y);
 	}
 	
+	public String getAddress() {
+		return this.address;
+	}
+	
 
 	public void rateAllZones() {
 		for (int i = 0; i < map.size(); i++) {
