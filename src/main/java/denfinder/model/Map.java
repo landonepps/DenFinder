@@ -3,6 +3,8 @@ package denfinder.model;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.lang3.tuple.Pair;
 import org.json.JSONException;
 
 /**
@@ -19,13 +21,22 @@ public class Map {
 	String relationshipStatus;
 	String age;
 	String schoolImportance;
+	String address;
 	
 	private SchoolList schoolList = new SchoolList();
 
 	//create new list
-	public Map(Coordinates bottomLeft, Coordinates topRight, String newIncome, String newRelationshipStatus,
+	public Map(String address, String newIncome, String newRelationshipStatus,
 									   String newAge, String newSchoolImportance) throws JSONException, IOException {
 		this.map = new ArrayList<ArrayList<Zone>>();
+		
+		this.address = address;
+		
+		Pair<Coordinates, Coordinates> viewport = 
+				GeocodingAPI.getCoordinates(address);
+		
+		Coordinates topRight = viewport.getRight();
+		Coordinates bottomLeft = viewport.getLeft();
 		
 		double latDiff = (topRight.getLatitude() - bottomLeft.getLatitude()) / Common.MAP_DIVISIONS;
 		double lonDiff = (topRight.getLongitude() - bottomLeft.getLongitude()) / Common.MAP_DIVISIONS;

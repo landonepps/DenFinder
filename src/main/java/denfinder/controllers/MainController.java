@@ -26,14 +26,8 @@ public class MainController {
 
     @RequestMapping(value="/results", method=RequestMethod.GET)
     public String results(@ModelAttribute FormData formData, Model model) throws IOException {
-    	
-    	Pair<Coordinates, Coordinates> viewport = 
-    						GeocodingAPI.getCoordinates(formData.getAddress());
-    	
-    	System.out.println(viewport.getLeft().getLatitude() + ", " + viewport.getLeft().getLongitude());
-    	System.out.println(viewport.getRight().getLatitude() + ", " + viewport.getRight().getLongitude());
-    	
-    	Map map = new Map(viewport.getLeft(), viewport.getRight(), formData.getIncome(), formData.getRelationship(), formData.getAge(), formData.getSchool());
+
+    	Map map = new Map(formData.getAddress(), formData.getIncome(), formData.getRelationship(), formData.getAge(), formData.getSchool());
     	
         model.addAttribute("formData", formData);
         model.addAttribute("map", map);
