@@ -2,9 +2,9 @@ package denfinder.model;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.json.JSONException;
 
 /**
@@ -21,36 +21,37 @@ public class Map {
 	String relationshipStatus;
 	String age;
 	String schoolImportance;
+	String address;
 	
-	private SchoolSet schoolList = new SchoolSet();
+	private SchoolList schoolList = new SchoolList();
 
 	//create new list
-	public Map(Coordinates bottomLeft, Coordinates topRight, String newIncome, String newRelationshipStatus,
+	public Map(String address, String newIncome, String newRelationshipStatus,
 									   String newAge, String newSchoolImportance) throws JSONException, IOException {
 		this.map = new ArrayList<ArrayList<Zone>>();
+		
+		this.address = address;
+		
+		Pair<Coordinates, Coordinates> viewport = 
+				GeocodingAPI.getCoordinates(address);
+		
+		Coordinates topRight = viewport.getRight();
+		Coordinates bottomLeft = viewport.getLeft();
 		
 		double latDiff = (topRight.getLatitude() - bottomLeft.getLatitude()) / Common.MAP_DIVISIONS;
 		double lonDiff = (topRight.getLongitude() - bottomLeft.getLongitude()) / Common.MAP_DIVISIONS;
 		
 		System.out.println(" " + latDiff + " " + lonDiff);
 		
-		//get all states currently in viewport (all corners and center of viewpoint are tested)
-		Coordinates topLeft = new Coordinates(bottomLeft.latitude,topRight.longitude);
-		Coordinates bottomRight = new Coordinates(topRight.latitude,bottomLeft.longitude);
-		Coordinates center = new Coordinates((topLeft.latitude + topRight.latitude) / 2, (topLeft.longitude + bottomLeft.longitude)/2);
-
-		HashSet<String> states = new HashSet<String>();
-		states.add(GeocodingAPI.getState(topRight));
-		states.add(GeocodingAPI.getState(bottomLeft));
-		states.add(GeocodingAPI.getState(topLeft));
-		states.add(GeocodingAPI.getState(bottomRight));
-		states.add(GeocodingAPI.getState(center));
+		//String state = GeocodingAPI.getState(bottomLeft);
+		String zip = GeocodingAPI.getZipCode(address);
 		
 		//debug information
-		for(String s : states)
-			System.out.println("[DEBUG] Adding all schools from state: " + s);
+		System.out.println("[DEBUG] Adding all schools from zip code: " + zip);
 				
-		schoolList.populate(states);
+		//schoolList.populate("", "", state, "");
+		schoolList.populate("", "", "", zip);
+		
 		
 		for (int i = 0; i < Common.MAP_DIVISIONS; i++) {
 			ArrayList<Zone> longitudes = new ArrayList<Zone>();
@@ -77,6 +78,10 @@ public class Map {
 	
 	public Zone getZone(int x, int y) {
 		return map.get(x).get(y);
+	}
+	
+	public String getAddress() {
+		return this.address;
 	}
 	
 
