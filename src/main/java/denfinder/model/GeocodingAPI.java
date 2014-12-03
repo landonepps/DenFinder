@@ -1,8 +1,10 @@
 package denfinder.model;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.web.util.UriUtils;
+
 import java.io.IOException;
 
 /**
@@ -55,13 +57,27 @@ public class GeocodingAPI extends ApiCall {
         return location.getString("short_name");
     }
     
-    public static String getZipCode(Coordinates coords) throws IOException{
+    public static String getZipCode(String address) throws IOException{
     	String url = "https://maps.googleapis.com/maps/api/geocode/json?address=" +
-                UriUtils.encodeFragment(coords.getLatitude() + " " + coords.getLongitude(), "UTF-8") + "&sensor=false&key=" + Common.GEOCODING_KEY;
+                UriUtils.encodeFragment(address, "UTF-8") + "&sensor=false&key=" + Common.GEOCODING_KEY;
 
         JSONObject json = loadJSON(url);
-        JSONObject zipcode = json.getJSONArray("results").getJSONObject(0).getJSONArray("address_components").getJSONObject(6);
-        return zipcode.getString("short_name");
+        //TODO reformat
+        String zip = "";
+        JSONArray addressComponents = json.getJSONArray("results").getJSONObject(0).getJSONArray("address_components");
+        for(int i = 0; i < addressComponents.length(); i++) {
+        	JSONObject element = addressComponents.getJSONObject(i);
+        	JSONArray types = element.getJSONArray("types");
+        	for(int j = 0; j < types.length(); j++) {
+        		String type = types.getString(j);
+        		if ("postal_code".equals(type)) {
+        			zip = element.getString("long_name");
+        			break;
+        		}
+        	}
+        }
+        
+        return zip;
 
     }
 }

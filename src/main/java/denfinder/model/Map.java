@@ -44,7 +44,7 @@ public class Map {
 		System.out.println(" " + latDiff + " " + lonDiff);
 		
 		//String state = GeocodingAPI.getState(bottomLeft);
-		String zip = GeocodingAPI.getZipCode(bottomLeft);
+		String zip = GeocodingAPI.getZipCode(address);
 		
 		//debug information
 		System.out.println("[DEBUG] Adding all schools from zip code: " + zip);
