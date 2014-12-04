@@ -137,7 +137,7 @@ public class SchoolSet implements Set<School> {
 				this.add(s);
             
 				//print debugging information
-				System.out.println("[DEBUG] Adding school to school list: " + schoolName);
+				//System.out.println("[DEBUG] Adding school to school list: " + schoolName);
             
 			}
 		}

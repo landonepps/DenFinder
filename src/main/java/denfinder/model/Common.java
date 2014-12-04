@@ -8,7 +8,8 @@ package denfinder.model;
 public final class Common {
 	
 	//API keys
-	static final String EDUCATION_KEY = "277df245ae9d53f1cd36667569138498";
+	static final String EDUCATION_KEY = "3f82bf1cefee73674f3992dcc0cb20c3";   // Isaac's key
+	//static final String EDUCATION_KEY = "277df245ae9d53f1cd36667569138498";
 	//static final String EDUCATION_KEY = "efb9b316554a9f2eb62e8eaafa8f9bfe"; //education key for wind
 	
 	
@@ -84,40 +85,26 @@ public final class Common {
 	static final double RELATIONSHIP_MAX_POINTS  = 15;
 	static final double RELATIONSHIP_BASE_POINTS = 3;
 	
-	/*
-	static final double RELATIONSHIP_MATCHING_RATIO_TIER_1 = 1.5;
-	static final double RELATIONSHIP_MATCHING_RATIO_TIER_2 = 2.0;
-	static final double RELATIONSHIP_MATCHING_RATIO_TIER_3 = 3.0;
-	
-	static final double RELATIONSHIP_NOT_MATCHING_RATIO_TIER_1 = 0.667;
-	static final double RELATIONSHIP_NOT_MATCHING_RATIO_TIER_2 = 0.50;
-	static final double RELATIONSHIP_NOT_MATCHING_RATIO_TIER_3 = 0.333;
-
-	static final double RELATIONSHIP_MATCHING_POINTS_TIER_1 = 3;
-	static final double RELATIONSHIP_MATCHING_POINTS_TIER_2 = 8;
-	static final double RELATIONSHIP_MATCHING_POINTS_TIER_3 = 15;
-	
-	static final double RELATIONSHIP_NOT_MATCHING_POINTS_TIER_1 = -3;
-	static final double RELATIONSHIP_NOT_MATCHING_POINTS_TIER_2 = -8;
-	static final double RELATIONSHIP_NOT_MATCHING_POINTS_TIER_3 = -15;
-	*/
 	
 	// Algorithm input: "Importance of School System Quality"
 	static final String SCHOOL_IMPORTANCE_STRING_LOW    = "Not Very Important";
 	static final String SCHOOL_IMPORTANCE_STRING_MEDIUM = "Somewhat Important";
 	static final String SCHOOL_IMPORTANCE_STRING_HIGH   = "Very Important";
 	
-	static final double MAXIMUM_SCHOOL_DISTANCE = 1.0;
-	static final double TEST_SCORE_LOW = 3;
-	static final double TEST_SCORE_MEDIUM = 5;
-	static final double TEST_SCORE_HIGH = 8;
+	static final double SCHOOL_MAX_DISTANCE = 1.0;
 	
-	static final double TEST_SCORE_LOW_POINTS = 1;
-	static final double TEST_SCORE_MEDIUM_POINTS = 2;
-	static final double TEST_SCORE_HIGH_POINTS = 3;
+	static final double SCHOOL_TEST_SCORE_LOW = 4;
+	static final double SCHOOL_TEST_SCORE_HIGH = 8;
 	
-	static final double SCHOOl_QUALITY_MULTIPLIER_VERY_IMPORTANT     = 3.0;
-	static final double SCHOOL_QUALITY_MULTIPLIER_SOMEWHAT_IMPORTANT = 1.5;
+	static final double SCHOOL_QUALITY_BONUS_POINTS = 3.0;
+	static final double SCHOOL_SCORE_MULTIPLIER = 0.5;
+	
+	static final double SCHOOL_MAX_POINTS_VERY_IMPORTANT     = 30.0;
+	static final double SCHOOL_MAX_POINTS_SOMEWHAT_IMPORTANT = 20.0;
+	static final double SCHOOL_MAX_POINTS_NOT_VERY_IMPORTANT = 10.0;
+	
+	static final double SCHOOl_QUALITY_MULTIPLIER_VERY_IMPORTANT     = 1.5;
+	static final double SCHOOL_QUALITY_MULTIPLIER_SOMEWHAT_IMPORTANT = 1.0;
 	static final double SCHOOL_QUALITY_MULTIPLIER_NOT_VERY_IMPORTANT = 0.5;
 	static final double SCHOOL_QUALITY_MULTIPLIER_NO_PREFERENCE      = 0.0;
 }

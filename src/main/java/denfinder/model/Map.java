@@ -278,12 +278,21 @@ public class Map {
 		switch (schoolImportance) {
 			case Common.SCHOOL_IMPORTANCE_STRING_HIGH:
 				educationPoints *= Common.SCHOOl_QUALITY_MULTIPLIER_VERY_IMPORTANT;
+				if (educationPoints > Common.SCHOOL_MAX_POINTS_VERY_IMPORTANT) {
+					educationPoints = Common.SCHOOL_MAX_POINTS_VERY_IMPORTANT;
+				}
 				break;
 			case Common.SCHOOL_IMPORTANCE_STRING_MEDIUM:
 				educationPoints *= Common.SCHOOL_QUALITY_MULTIPLIER_SOMEWHAT_IMPORTANT;
+				if (educationPoints > Common.SCHOOL_MAX_POINTS_SOMEWHAT_IMPORTANT) {
+					educationPoints = Common.SCHOOL_MAX_POINTS_SOMEWHAT_IMPORTANT;
+				}
 				break;
 			case Common.SCHOOL_IMPORTANCE_STRING_LOW:
 				educationPoints *= Common.SCHOOL_QUALITY_MULTIPLIER_NOT_VERY_IMPORTANT;
+				if (educationPoints > Common.SCHOOL_MAX_POINTS_NOT_VERY_IMPORTANT) {
+					educationPoints = Common.SCHOOL_MAX_POINTS_NOT_VERY_IMPORTANT;
+				}
 				break;
 			default:
 				educationPoints *= Common.SCHOOL_QUALITY_MULTIPLIER_NO_PREFERENCE;
@@ -404,15 +413,45 @@ public class Map {
 	}
 	
 	private double rateEducation(Coordinates location) {
+		// The number of points the schools contribute to the zone before
+		// multipliers:
 		double rating = 0.0;
+		// The distance between the school and the zone:
+		double distance = 0.0;
+		// The test rating for each school:
+		double testRating = 0.0;
+		// The amount of points each school contributes to the overall
+		// education rating:
+		double schoolRating = 0.0;
+		// The number of schools with very good test ratings found:
+		int qualitySchoolsFound = 0;
 		
+		// Each school within a certain range has the potential to add points.
+		for (School aSchool : schoolList) {
+			schoolRating = 0.0;
+			distance = Coordinates.distance(location,  aSchool.getLocation());
+			testRating = aSchool.getTestRating();
+			
+			// Schools further than a certain distance away are not considered.
+			if (distance <= Common.SCHOOL_MAX_DISTANCE && testRating > 0.0) {
+				// Only schools above a minimum quality level add points.
+				if (testRating >= Common.SCHOOL_TEST_SCORE_LOW) {
+					// Closer schools with higher test ratings are given more value.
+					schoolRating = testRating * 
+								   (Common.SCHOOL_MAX_DISTANCE - distance) * 
+								   Common.SCHOOL_SCORE_MULTIPLIER;
+					
+					if (testRating >= Common.SCHOOL_TEST_SCORE_HIGH) {
+						qualitySchoolsFound++;
+					}
+				}
+			}
+			
+			rating += schoolRating;
+		}
 		
-		
-		
-		
-		
-		
-		
+		rating += qualitySchoolsFound * Common.SCHOOL_QUALITY_BONUS_POINTS;
+
 		
 		return rating;
 	}
