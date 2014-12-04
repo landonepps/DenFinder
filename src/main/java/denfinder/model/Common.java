@@ -25,7 +25,8 @@ public final class Common {
 	// Algorithm input: General
 	static final String INPUT_STRING_NO_PREFERENCE = "No Preference";
 	static final double MINIMUM_RATING = -30.0;
-	static final double MAXIMUM_RATING = 60.0;
+	static final double MAXIMUM_RATING = 70.0;
+	static final double RATING_ADJUSTMENT = 30.0;
 	
 	// Algorithm input: "Income Range"
 	static final String INCOME_STRING_TIER_1 = "0-25";

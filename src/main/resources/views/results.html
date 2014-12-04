@@ -41,7 +41,7 @@
                 /*var dataPoint = {location: new google.maps.LatLng(map[i][j].location.latitude, map[i][j].location.longitude), weight: map[i][j].rating};*/
                 var dataPoint = {
                     location: new google.maps.LatLng(map[i][j].location.latitude, map[i][j].location.longitude),
-                    weight: map[i][j].medianAge / 200
+                    weight: map[i][j].rating / 500
                 };
                 ratingData.push(dataPoint);
             }

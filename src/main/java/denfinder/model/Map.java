@@ -57,8 +57,8 @@ public class Map {
 		states.add(GeocodingAPI.getState(center));
 		
 		//debug information
-		for(String s : states)
-			System.out.println("[DEBUG] Adding all schools from state: " + s);
+		//for(String s : states)
+			//System.out.println("[DEBUG] Adding all schools from state: " + s);
 				
 		schoolList.populate(states);
 		
@@ -75,6 +75,8 @@ public class Map {
 		relationshipStatus = newRelationshipStatus;
 		age   			   = newAge;
 		schoolImportance   = newSchoolImportance;
+		
+		rateAllZones();
 	}
 	
 	public int getDimensions() {
@@ -308,6 +310,18 @@ public class Map {
 			zoneRating = Common.MINIMUM_RATING;
 		}
 		
+		zoneRating += Common.RATING_ADJUSTMENT;
+		
+
+		// DEBUG output
+		System.out.println("Zone: " + aZone.getLocation().getLongitude() + ", " + aZone.getLocation().getLatitude() + '\n' +
+						   "----------" + 
+						   "Income score: " + incomePoints + '\n' +
+						   "Age score: " + agePoints + '\n' +
+						   "Relationship score: " + relationshipPoints + '\n' +
+						   "Education score: " + educationPoints + '\n' +
+						   "Total score: " + zoneRating + '\n');
+		
 		aZone.setRating(zoneRating);
 	}
 
@@ -452,7 +466,6 @@ public class Map {
 		
 		rating += qualitySchoolsFound * Common.SCHOOL_QUALITY_BONUS_POINTS;
 
-		
 		return rating;
 	}
 	
