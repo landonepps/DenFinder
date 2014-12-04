@@ -133,6 +133,7 @@ public class SchoolSet implements Set<School> {
             
 				//create new school object and add to list
 				School s = new School(id,testRating,new Coordinates(lat,lon));
+				s.setName(schoolName);
 				this.add(s);
             
 				//print debugging information
