@@ -198,7 +198,7 @@ public class Map {
 				break;
 		}
 		
-		if (income != Common.INPUT_STRING_NO_PREFERENCE) {
+		if (!income.equals(Common.INPUT_STRING_NO_PREFERENCE)) {
 			if (matchingIncome) {
 				incomePoints = Common.MATCHING_INCOME_POINTS;
 			}
@@ -271,7 +271,7 @@ public class Map {
 				break;
 		}
 		
-		if (age != Common.INPUT_STRING_NO_PREFERENCE) {
+		if (!age.equals(Common.INPUT_STRING_NO_PREFERENCE)) {
 			if (matchingAge) {
 				agePoints = Common.MATCHING_AGE_POINTS;
 			}
