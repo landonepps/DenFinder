@@ -78,6 +78,13 @@ public final class Common {
 	static final String RELATIONSHIP_STRING_SINGLE  = "Single";
 	static final String RELATIONSHIP_STRING_MARRIED = "Married";
 	
+	static final double RELATIONSHIP_MINIMUM_RATIO = 1.2;
+	
+	static final double RELATIONSHIP_MIN_POINTS  = -15;
+	static final double RELATIONSHIP_MAX_POINTS  = 15;
+	static final double RELATIONSHIP_BASE_POINTS = 3;
+	
+	/*
 	static final double RELATIONSHIP_MATCHING_RATIO_TIER_1 = 1.5;
 	static final double RELATIONSHIP_MATCHING_RATIO_TIER_2 = 2.0;
 	static final double RELATIONSHIP_MATCHING_RATIO_TIER_3 = 3.0;
@@ -93,7 +100,7 @@ public final class Common {
 	static final double RELATIONSHIP_NOT_MATCHING_POINTS_TIER_1 = -3;
 	static final double RELATIONSHIP_NOT_MATCHING_POINTS_TIER_2 = -8;
 	static final double RELATIONSHIP_NOT_MATCHING_POINTS_TIER_3 = -15;
-	
+	*/
 	
 	// Algorithm input: "Importance of School System Quality"
 	static final String SCHOOL_IMPORTANCE_STRING_LOW    = "Not Very Important";

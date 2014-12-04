@@ -168,13 +168,14 @@ public class Map {
 				break;
 		}
 		
-		if (matchingIncome) {
-			incomePoints = Common.MATCHING_INCOME_POINTS;
+		if (income != Common.INPUT_STRING_NO_PREFERENCE) {
+			if (matchingIncome) {
+				incomePoints = Common.MATCHING_INCOME_POINTS;
+			}
+			else {
+				incomePoints = rateIncome(medianIncome, targetIncome);
+			}
 		}
-		else {
-			incomePoints = rateIncome(medianIncome, targetIncome);
-		}
-		
 		
 		zoneRating += incomePoints;
 		
@@ -240,13 +241,14 @@ public class Map {
 				break;
 		}
 		
-		if (matchingAge) {
-			agePoints = Common.MATCHING_AGE_POINTS;
+		if (age != Common.INPUT_STRING_NO_PREFERENCE) {
+			if (matchingAge) {
+				agePoints = Common.MATCHING_AGE_POINTS;
+			}
+			else {
+				agePoints = rateAge(medianAge, targetAge);
+			}
 		}
-		else {
-			agePoints = rateAge(medianAge, targetAge);
-		}
-		
 		
 		zoneRating += agePoints;
 		
@@ -254,52 +256,14 @@ public class Map {
 		// Relationship status rating:
 		double relationshipPoints = 0;
 		
-		double ratio      = 0;
 		double numSingle  = aZone.getNumSingle();
 		double numMarried = aZone.getNumMarried();
-		
-		if (relationshipStatus.equals(Common.RELATIONSHIP_STRING_SINGLE) &&
-			numMarried != 0) {
-			
-			ratio = numSingle / numMarried;
-		}
-		
-		else if (relationshipStatus.equals(Common.RELATIONSHIP_STRING_MARRIED) &&
-			numSingle != 0) {
-			
-			ratio = numMarried / numSingle;
-		}
-		
-		if (ratio != 0) {
-			if (ratio >= Common.RELATIONSHIP_MATCHING_RATIO_TIER_1 && 
-				ratio <= Common.RELATIONSHIP_MATCHING_RATIO_TIER_2) {
-				
-				relationshipPoints += Common.RELATIONSHIP_MATCHING_POINTS_TIER_1;
+		if (numMarried != 0 && numSingle != 0) {
+			if (relationshipStatus.equals(Common.RELATIONSHIP_STRING_SINGLE)) {
+				relationshipPoints = rateRelationship(numSingle, numMarried);
 			}
-			else if (ratio >= Common.RELATIONSHIP_MATCHING_RATIO_TIER_2 &&
-					 ratio <= Common.RELATIONSHIP_MATCHING_RATIO_TIER_3) {
-				
-				relationshipPoints += Common.RELATIONSHIP_MATCHING_POINTS_TIER_2;
-			}
-			else if (ratio >= Common.RELATIONSHIP_MATCHING_RATIO_TIER_3) {
-				
-				relationshipPoints += Common.RELATIONSHIP_MATCHING_POINTS_TIER_3;
-			}
-			
-			
-			else if (ratio <= Common.RELATIONSHIP_NOT_MATCHING_RATIO_TIER_1 && 
-					 ratio >= Common.RELATIONSHIP_NOT_MATCHING_RATIO_TIER_2) {
-					
-				relationshipPoints += Common.RELATIONSHIP_NOT_MATCHING_POINTS_TIER_1;
-			}
-			else if (ratio <= Common.RELATIONSHIP_NOT_MATCHING_RATIO_TIER_2 &&
-					 ratio >= Common.RELATIONSHIP_NOT_MATCHING_RATIO_TIER_3) {
-					
-				relationshipPoints += Common.RELATIONSHIP_NOT_MATCHING_POINTS_TIER_2;
-			}
-			else if (ratio <= Common.RELATIONSHIP_NOT_MATCHING_RATIO_TIER_3) {
-				
-				relationshipPoints += Common.RELATIONSHIP_NOT_MATCHING_POINTS_TIER_3;
+			else if (relationshipStatus.equals(Common.RELATIONSHIP_STRING_MARRIED)) {
+				relationshipPoints = rateRelationship(numMarried, numSingle);
 			}
 		}
 		
@@ -307,20 +271,23 @@ public class Map {
 		
 		
 		// Education rating:
-		double educationPoints = 0;
+		double educationPoints = 0.0;
 		
+		educationPoints = rateEducation(aZone.getLocation());
 
-
-		
-		
-		
-		// TODO: Education rating part of algorithm
-		
-		
-		
-		
-		
-		
+		switch (schoolImportance) {
+			case Common.SCHOOL_IMPORTANCE_STRING_HIGH:
+				educationPoints *= Common.SCHOOl_QUALITY_MULTIPLIER_VERY_IMPORTANT;
+				break;
+			case Common.SCHOOL_IMPORTANCE_STRING_MEDIUM:
+				educationPoints *= Common.SCHOOL_QUALITY_MULTIPLIER_SOMEWHAT_IMPORTANT;
+				break;
+			case Common.SCHOOL_IMPORTANCE_STRING_LOW:
+				educationPoints *= Common.SCHOOL_QUALITY_MULTIPLIER_NOT_VERY_IMPORTANT;
+				break;
+			default:
+				educationPoints *= Common.SCHOOL_QUALITY_MULTIPLIER_NO_PREFERENCE;
+		}
 		
 		zoneRating += educationPoints;
 		
@@ -402,6 +369,50 @@ public class Map {
 			rating = Math.pow(Common.INCOME_RATING_BASE_FARTHEST, negativeExponent);
 			rating *= -1.0;
 		}
+		
+		return rating;
+	}
+	
+	private double rateRelationship(double desired, double undesired) {
+		// The ratio of singles to non-singles (if singles are desired), or
+		// non-singles to singles (if non-singles are desired).
+		double ratio = desired / undesired;
+		// The opposite ratio.
+		double revRatio = undesired / desired;
+		// The number of points the relationship demographic contributes
+		// to the zone.
+		double rating = 0.0;
+		
+		// If there are more desireds than undesireds:
+		if (ratio >= 1.0) {
+			rating = ratio * Common.RELATIONSHIP_BASE_POINTS;
+		}
+		// If there are more undesireds than desireds (negative points):
+		else {
+			rating = revRatio * Common.RELATIONSHIP_BASE_POINTS;
+			rating *= -1.0;
+		}
+		
+		if (rating > Common.RELATIONSHIP_MAX_POINTS) {
+			rating = Common.RELATIONSHIP_MAX_POINTS;
+		}
+		else if (rating < Common.RELATIONSHIP_MIN_POINTS) {
+			rating = Common.RELATIONSHIP_MIN_POINTS;
+		}
+		
+		return rating;
+	}
+	
+	private double rateEducation(Coordinates location) {
+		double rating = 0.0;
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		return rating;
 	}
