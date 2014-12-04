@@ -15,7 +15,7 @@ public class Zone {
 	private Coordinates location;
 
 	// How good of a match is this zone?
-	private int rating = -1;
+	private double rating = -1.0;
 	
 	// Census data
     private int medianIncome;
@@ -60,11 +60,11 @@ public class Zone {
 	 * Get how good a match this zone is to query
 	 * @return match score, -1 if uninitialized
 	 */
-	public int getRating() {
+	public double getRating() {
 		return rating;
 	}
 	
-	public void setRating(int rating) {
+	public void setRating(double rating) {
 		this.rating = rating;
 	}
 
