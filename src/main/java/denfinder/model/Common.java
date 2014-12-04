@@ -8,9 +8,9 @@ package denfinder.model;
 public final class Common {
 	
 	//API keys
-	static final String EDUCATION_KEY = "3f82bf1cefee73674f3992dcc0cb20c3";   // Isaac's key
+	//static final String EDUCATION_KEY = "3f82bf1cefee73674f3992dcc0cb20c3";   // Isaac's key
 	//static final String EDUCATION_KEY = "277df245ae9d53f1cd36667569138498";
-	//static final String EDUCATION_KEY = "efb9b316554a9f2eb62e8eaafa8f9bfe"; //education key for wind
+	static final String EDUCATION_KEY = "efb9b316554a9f2eb62e8eaafa8f9bfe"; //education key for wind
 	
 	
 	static final String GEOCODING_KEY = "AIzaSyDmW7DnNY5wR_5DI4QwmS2Zxmg0q3Ba08E";
