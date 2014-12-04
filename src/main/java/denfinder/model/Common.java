@@ -18,6 +18,9 @@ public final class Common {
 	// Map data
 	static final int MAP_DIVISIONS = 10;
 	
+	//CensusAPI result constants
+	static final int RESULT_NOT_AVAILABLE = -1;
+	
 	// Algorithm input: General
 	static final String INPUT_STRING_NO_PREFERENCE = "No Preference";
 	
