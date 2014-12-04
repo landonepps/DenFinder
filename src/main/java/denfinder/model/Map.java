@@ -93,10 +93,17 @@ public class Map {
 		return this.address;
 	}
 	
+
 	public List<ArrayList<Zone>> getRawMap() {
 		return map;
 	}
 	
+
+	public SchoolSet getSchoolList() {
+		return this.schoolList;
+	}
+	
+
 	public void rateAllZones() {
 		for (int i = 0; i < map.size(); i++) {
 			for (int j = 0; j < map.get(i).size(); j++) {

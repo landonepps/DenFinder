@@ -33,6 +33,7 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;libraries=visualization" type="text/javascript"></script>
     <script th:inline="javascript" type="text/javascript">
         /*<![CDATA[*/
+        var schools = /*[[${map.schoolList}]]*/ null;
         var ratingData = [];
         var map = /*[[${map.rawMap}]]*/ null;
         for (var i = 0; i < map.length; ++i) {
@@ -47,19 +48,30 @@
         }
 
         function initialize() {
+
             var map = /*[[${map.rawMap}]]*/ null;
             var center = map[Math.floor(map.length / 2)][Math.floor(map.length / 2)].location;
             var mapOptions = {
                 // zoom: 12,
                 center: new google.maps.LatLng(center.latitude, center.longitude),
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
-                disableDefaultUI: true,
-                scrollwheel: false,
+                //disableDefaultUI: true,
+                scrollwheel: false
                 //draggable: false,
                 //draggableCursor: 'default'
             };
 
             map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+            
+            for (var i = 0; i < schools.length; i++) {
+            	var latLng = new google.maps.LatLng(schools[i].location.latitude, schools[i].location.longitude);
+            	var marker = new google.maps.Marker({
+            		position: latLng,
+            		map: map,
+            		animation:google.maps.Animation.DROP,
+            		title: schools[i].name
+            	});
+            }
 
             //fit to bounds
             var bounds = new google.maps.LatLngBounds();

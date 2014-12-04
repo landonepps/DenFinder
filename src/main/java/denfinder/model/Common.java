@@ -8,7 +8,7 @@ package denfinder.model;
 public final class Common {
 	
 	//API keys
-	static final String EDUCATION_KEY = "76b8929e74f004bf68c53ce9d350ad7f";
+	static final String EDUCATION_KEY = "277df245ae9d53f1cd36667569138498";
 	//static final String EDUCATION_KEY = "efb9b316554a9f2eb62e8eaafa8f9bfe"; //education key for wind
 	
 	
@@ -17,6 +17,9 @@ public final class Common {
 	
 	// Map data
 	static final int MAP_DIVISIONS = 10;
+	
+	//CensusAPI result constants
+	static final int RESULT_NOT_AVAILABLE = -1;
 	
 	// Algorithm input: General
 	static final String INPUT_STRING_NO_PREFERENCE = "No Preference";

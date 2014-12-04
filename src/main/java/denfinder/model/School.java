@@ -12,6 +12,7 @@ public class School {
 	private double testRating;
 	private Coordinates location;
 	private String ID;
+	private String name;
 	
 	public School() {
 		//set up default values for a school
@@ -34,6 +35,14 @@ public class School {
 
 	public void setID(String iD) {
 		ID = iD;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String getName() {
+		return this.name;
 	}
 
 	public double getTestRating() {

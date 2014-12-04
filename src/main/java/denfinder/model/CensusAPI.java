@@ -54,8 +54,16 @@ public class CensusAPI extends ApiCall {
         JSONArray censusJSON = loadJSONArray(censusURL).getJSONArray(1);
         //System.out.println(censusJSON);
         // set variables
-        medianIncome = censusJSON.getInt(0);
-        medianAge = censusJSON.getDouble(1);
+        if(!censusJSON.isNull(0))
+           	medianIncome = censusJSON.getInt(0);
+        else
+        	medianIncome = Common.RESULT_NOT_AVAILABLE;
+        
+        if(!censusJSON.isNull(0))
+        	medianAge = censusJSON.getDouble(1);
+        else
+        	medianAge = Common.RESULT_NOT_AVAILABLE;
+        
         numSingle = censusJSON.getInt(3);
         int totalRelationship = censusJSON.getInt(2);
         numMarried = totalRelationship - numSingle;
