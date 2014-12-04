@@ -103,15 +103,17 @@ public class Map {
 	}
 	
 	public void rateZone(Zone aZone) {
-		int zoneRating = 0;
+		double zoneRating = 0.0;
 		
 		// Income rating:
-		int incomePoints = 0;
+		double incomePoints = 0.0;
+		int medianIncome = aZone.getMedianIncome();
+		
 		
 		switch(income) {
 			case Common.INCOME_STRING_TIER_1:
-				if (aZone.getMedianIncome() >= Common.INCOME_TIER_1 &&
-					aZone.getMedianIncome() <= Common.INCOME_TIER_2) {
+				if (medianIncome >= Common.INCOME_TIER_1 &&
+					medianIncome <= Common.INCOME_TIER_2) {
 					
 					incomePoints += Common.MATCHING_INCOME_POINTS;
 				}
@@ -119,8 +121,8 @@ public class Map {
 				break;
 		
 			case Common.INCOME_STRING_TIER_2:
-				if (aZone.getMedianIncome() >= Common.INCOME_TIER_2 &&
-					aZone.getMedianIncome() <= Common.INCOME_TIER_3) {
+				if (medianIncome >= Common.INCOME_TIER_2 &&
+					medianIncome <= Common.INCOME_TIER_3) {
 						
 					incomePoints += Common.MATCHING_INCOME_POINTS;
 				}
@@ -128,8 +130,8 @@ public class Map {
 				break;
 				
 			case Common.INCOME_STRING_TIER_3:
-				if (aZone.getMedianIncome() >= Common.INCOME_TIER_3 &&
-					aZone.getMedianIncome() <= Common.INCOME_TIER_4) {
+				if (medianIncome >= Common.INCOME_TIER_3 &&
+					medianIncome <= Common.INCOME_TIER_4) {
 					
 					incomePoints += Common.MATCHING_INCOME_POINTS;
 				}
@@ -137,8 +139,8 @@ public class Map {
 				break;
 				
 			case Common.INCOME_STRING_TIER_4:
-				if (aZone.getMedianIncome() >= Common.INCOME_TIER_4 &&
-					aZone.getMedianIncome() <= Common.INCOME_TIER_5) {
+				if (medianIncome >= Common.INCOME_TIER_4 &&
+					medianIncome <= Common.INCOME_TIER_5) {
 						
 					incomePoints += Common.MATCHING_INCOME_POINTS;
 				}
@@ -146,7 +148,7 @@ public class Map {
 				break;
 				
 			case Common.INCOME_STRING_TIER_5:
-				if (aZone.getMedianIncome() >= Common.INCOME_TIER_5) {
+				if (medianIncome >= Common.INCOME_TIER_5) {
 						
 					incomePoints += Common.MATCHING_INCOME_POINTS;
 				}
@@ -158,12 +160,13 @@ public class Map {
 		
 		
 		// Age rating:
-		int agePoints = 0;
+		double agePoints = 0.0;
+		double medianAge = aZone.getMedianAge();
 		
 		switch(age) {
 			case Common.AGE_STRING_TIER_1:
-				if (aZone.getMedianAge() >= Common.AGE_TIER_1 &&
-					aZone.getMedianAge() <= Common.AGE_TIER_2) {
+				if (medianAge >= Common.AGE_TIER_1 &&
+					medianAge <= Common.AGE_TIER_2) {
 					
 					agePoints += Common.MATCHING_AGE_POINTS;
 				}
@@ -171,8 +174,8 @@ public class Map {
 				break;
 				
 			case Common.AGE_STRING_TIER_2:
-				if (aZone.getMedianAge() >= Common.AGE_TIER_2 &&
-					aZone.getMedianAge() <= Common.AGE_TIER_3) {
+				if (medianAge >= Common.AGE_TIER_2 &&
+					medianAge <= Common.AGE_TIER_3) {
 					
 					agePoints += Common.MATCHING_AGE_POINTS;
 				}
@@ -180,8 +183,8 @@ public class Map {
 				break;
 				
 			case Common.AGE_STRING_TIER_3:
-				if (aZone.getMedianAge() >= Common.AGE_TIER_3 &&
-					aZone.getMedianAge() <= Common.AGE_TIER_4) {
+				if (medianAge >= Common.AGE_TIER_3 &&
+					medianAge <= Common.AGE_TIER_4) {
 					
 					agePoints += Common.MATCHING_AGE_POINTS;
 				}
@@ -189,8 +192,8 @@ public class Map {
 				break;
 				
 			case Common.AGE_STRING_TIER_4:
-				if (aZone.getMedianAge() >= Common.AGE_TIER_4 &&
-					aZone.getMedianAge() <= Common.AGE_TIER_5) {
+				if (medianAge >= Common.AGE_TIER_4 &&
+					medianAge <= Common.AGE_TIER_5) {
 					
 					agePoints += Common.MATCHING_AGE_POINTS;
 				}
@@ -198,8 +201,8 @@ public class Map {
 				break;
 				
 			case Common.AGE_STRING_TIER_5:
-				if (aZone.getMedianAge() >= Common.AGE_TIER_5 &&
-					aZone.getMedianAge() <= Common.AGE_TIER_6) {
+				if (medianAge >= Common.AGE_TIER_5 &&
+					medianAge <= Common.AGE_TIER_6) {
 					
 					agePoints += Common.MATCHING_AGE_POINTS;
 				}
@@ -207,7 +210,7 @@ public class Map {
 				break;
 				
 			case Common.AGE_STRING_TIER_6:
-				if (aZone.getMedianAge() >= Common.AGE_TIER_6) {
+				if (medianAge >= Common.AGE_TIER_6) {
 					
 					agePoints += Common.MATCHING_AGE_POINTS;
 				}
@@ -219,7 +222,7 @@ public class Map {
 		
 		
 		// Relationship status rating:
-		int relationshipPoints = 0;
+		double relationshipPoints = 0;
 		
 		double ratio      = 0;
 		double numSingle  = aZone.getNumSingle();
@@ -274,7 +277,7 @@ public class Map {
 		
 		
 		// Education rating:
-		int educationPoints = 0;
+		double educationPoints = 0;
 		
 
 
