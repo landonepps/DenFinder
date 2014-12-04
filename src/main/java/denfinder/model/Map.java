@@ -93,7 +93,10 @@ public class Map {
 		return this.address;
 	}
 	
-
+	public List<ArrayList<Zone>> getRawMap() {
+		return map;
+	}
+	
 	public void rateAllZones() {
 		for (int i = 0; i < map.size(); i++) {
 			for (int j = 0; j < map.get(i).size(); j++) {
@@ -106,117 +109,137 @@ public class Map {
 		double zoneRating = 0.0;
 		
 		// Income rating:
-		double incomePoints = 0.0;
-		int medianIncome = aZone.getMedianIncome();
+		double  incomePoints   = 0.0;
+		boolean matchingIncome = false;
+		int     medianIncome   = aZone.getMedianIncome();
+		int     targetIncome   = 0;
 		
 		
 		switch(income) {
 			case Common.INCOME_STRING_TIER_1:
 				if (medianIncome >= Common.INCOME_TIER_1 &&
 					medianIncome <= Common.INCOME_TIER_2) {
-					
-					incomePoints += Common.MATCHING_INCOME_POINTS;
+					matchingIncome = true;
 				}
+				targetIncome = (Common.INCOME_TIER_1 + Common.INCOME_TIER_2) / 2;
 			
 				break;
 		
 			case Common.INCOME_STRING_TIER_2:
 				if (medianIncome >= Common.INCOME_TIER_2 &&
 					medianIncome <= Common.INCOME_TIER_3) {
-						
-					incomePoints += Common.MATCHING_INCOME_POINTS;
+					matchingIncome = true;
 				}
+				targetIncome = (Common.INCOME_TIER_2 + Common.INCOME_TIER_3) / 2;
 				
 				break;
 				
 			case Common.INCOME_STRING_TIER_3:
 				if (medianIncome >= Common.INCOME_TIER_3 &&
 					medianIncome <= Common.INCOME_TIER_4) {
-					
-					incomePoints += Common.MATCHING_INCOME_POINTS;
+					matchingIncome = true;
 				}
+				targetIncome = (Common.INCOME_TIER_3 + Common.INCOME_TIER_4) / 2;
 				
 				break;
 				
 			case Common.INCOME_STRING_TIER_4:
 				if (medianIncome >= Common.INCOME_TIER_4 &&
 					medianIncome <= Common.INCOME_TIER_5) {
-						
-					incomePoints += Common.MATCHING_INCOME_POINTS;
+					matchingIncome = true;
 				}
+				targetIncome = (Common.INCOME_TIER_4 + Common.INCOME_TIER_5) / 2;
 				
 				break;
 				
 			case Common.INCOME_STRING_TIER_5:
 				if (medianIncome >= Common.INCOME_TIER_5) {
-						
-					incomePoints += Common.MATCHING_INCOME_POINTS;
+					matchingIncome = true;
 				}
+				targetIncome = Common.INCOME_TIER_5;
 				
 				break;
 		}
+		
+		if (matchingIncome) {
+			incomePoints = Common.MATCHING_INCOME_POINTS;
+		}
+		else {
+			incomePoints = rateIncome(medianIncome, targetIncome);
+		}
+		
 		
 		zoneRating += incomePoints;
 		
 		
 		// Age rating:
-		double agePoints = 0.0;
-		double medianAge = aZone.getMedianAge();
+		double agePoints    = 0.0;
+		boolean matchingAge = false;
+		double medianAge    = aZone.getMedianAge();
+		double targetAge    = 0.0;
 		
 		switch(age) {
 			case Common.AGE_STRING_TIER_1:
 				if (medianAge >= Common.AGE_TIER_1 &&
 					medianAge <= Common.AGE_TIER_2) {
-					
-					agePoints += Common.MATCHING_AGE_POINTS;
+					matchingAge = true;
 				}
+				targetAge = (Common.AGE_TIER_1 + Common.AGE_TIER_2) / 2;
 				
 				break;
 				
 			case Common.AGE_STRING_TIER_2:
 				if (medianAge >= Common.AGE_TIER_2 &&
 					medianAge <= Common.AGE_TIER_3) {
-					
-					agePoints += Common.MATCHING_AGE_POINTS;
+					matchingAge = true;
 				}
+				targetAge = (Common.AGE_TIER_2 + Common.AGE_TIER_2) / 3;
 				
 				break;
 				
 			case Common.AGE_STRING_TIER_3:
 				if (medianAge >= Common.AGE_TIER_3 &&
 					medianAge <= Common.AGE_TIER_4) {
-					
-					agePoints += Common.MATCHING_AGE_POINTS;
+					matchingAge = true;
 				}
+				targetAge = (Common.AGE_TIER_3 + Common.AGE_TIER_4) / 2;
 				
 				break;
 				
 			case Common.AGE_STRING_TIER_4:
 				if (medianAge >= Common.AGE_TIER_4 &&
 					medianAge <= Common.AGE_TIER_5) {
-					
-					agePoints += Common.MATCHING_AGE_POINTS;
+					matchingAge = true;
 				}
+				targetAge = (Common.AGE_TIER_4 + Common.AGE_TIER_5) / 2;
 				
 				break;
 				
 			case Common.AGE_STRING_TIER_5:
 				if (medianAge >= Common.AGE_TIER_5 &&
 					medianAge <= Common.AGE_TIER_6) {
-					
-					agePoints += Common.MATCHING_AGE_POINTS;
+					matchingAge = true;
 				}
+				targetAge = (Common.AGE_TIER_5 + Common.AGE_TIER_6) / 2;
 				
 				break;
 				
 			case Common.AGE_STRING_TIER_6:
 				if (medianAge >= Common.AGE_TIER_6) {
-					
-					agePoints += Common.MATCHING_AGE_POINTS;
+					matchingAge = true;
 				}
+				targetAge = Common.AGE_TIER_6;
 				
 				break;
 		}
+		
+		if (matchingAge) {
+			agePoints = Common.MATCHING_AGE_POINTS;
+		}
+		else {
+			agePoints = rateAge(medianAge, targetAge);
+		}
+		
 		
 		zoneRating += agePoints;
 		
@@ -294,15 +317,86 @@ public class Map {
 		
 		zoneRating += educationPoints;
 		
+		
+		if (zoneRating > Common.MAXIMUM_RATING) {
+			zoneRating = Common.MAXIMUM_RATING;
+		}
+		else if (zoneRating < Common.MINIMUM_RATING) {
+			zoneRating = Common.MINIMUM_RATING;
+		}
+		
 		aZone.setRating(zoneRating);
 	}
-	
 
-	public List<ArrayList<Zone>> getRawMap() {
-		return map;
+	
+	private double rateIncome(int actual, int target) {
+		// The difference in income between the actual median income of the
+		// zone and the middle of the user's desired income range:
+		double incomeDifference = Math.abs(actual - target);
+		// The further away from the target the median income is, the less
+		// the zone is worth.
+		double exponent = incomeDifference / Common.INCOME_RATING_DIVIDEND;
+		exponent *= -1.0;
+		// The number of points the income contributes to the zone.
+		double rating = 0.0;
+		
+		// Rating for a median income closer to the target:
+		if (incomeDifference <= Common.INCOME_RATING_DIFFERENCE_NEAR) {
+			rating = Common.MATCHING_INCOME_POINTS * 
+					 Math.pow(Common.INCOME_RATING_BASE_NEAR, exponent);
+		}
+		// Rating for a median income far from the target:
+		else if (incomeDifference <= Common.INCOME_RATING_DIFFERENCE_FAR){
+			rating = Common.MATCHING_INCOME_POINTS * 
+					 Math.pow(Common.INCOME_RATING_BASE_FAR, exponent);
+		}
+		// Rating for a median income extremely far from the target (worth
+		// negative points):
+		else {
+			double negativeExponent = Math.abs(incomeDifference - 
+									  Common.INCOME_RATING_DIFFERENCE_FAR) /
+									  Common.INCOME_RATING_DIVIDEND;
+			
+			rating = Math.pow(Common.INCOME_RATING_BASE_FARTHEST, negativeExponent);
+			rating *= -1.0;
+		}
+		
+		return rating;
 	}
-
-
-}
 	
-
+	private double rateAge(double actual, double target) {
+		// The difference in age between the actual median age of the
+		// zone and the middle of the user's desired age range:
+		double ageDifference = Math.abs(actual - target);
+		// The further away from the target the median age is, the less
+		// the zone is worth.
+		double exponent = ageDifference / Common.AGE_RATING_DIVIDEND;
+		exponent *= -1.0;
+		// The number of points the age contributes to the zone.
+		double rating = 0.0;
+		
+		// Rating for a median age closer to the target:
+		if (ageDifference <= Common.AGE_RATING_DIFFERENCE_NEAR) {
+			rating = Common.MATCHING_AGE_POINTS * 
+					 Math.pow(Common.AGE_RATING_BASE_NEAR, exponent);
+		}
+		// Rating for a median age far from the target:
+		else if (ageDifference <= Common.AGE_RATING_DIFFERENCE_FAR){
+			rating = Common.MATCHING_AGE_POINTS * 
+					 Math.pow(Common.AGE_RATING_BASE_FAR, exponent);
+		}
+		// Rating for a median age extremely far from the target (worth
+		// negative points):
+		else {
+			double negativeExponent = Math.abs(ageDifference - 
+									  Common.AGE_RATING_DIFFERENCE_FAR) /
+									  Common.AGE_RATING_DIVIDEND;
+			
+			rating = Math.pow(Common.INCOME_RATING_BASE_FARTHEST, negativeExponent);
+			rating *= -1.0;
+		}
+		
+		return rating;
+	}
+	
+}

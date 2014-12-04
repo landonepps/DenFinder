@@ -20,6 +20,8 @@ public final class Common {
 	
 	// Algorithm input: General
 	static final String INPUT_STRING_NO_PREFERENCE = "No Preference";
+	static final double MINIMUM_RATING = -30.0;
+	static final double MAXIMUM_RATING = 60.0;
 	
 	// Algorithm input: "Income Range"
 	static final String INCOME_STRING_TIER_1 = "0-25";
@@ -34,7 +36,14 @@ public final class Common {
 	static final int INCOME_TIER_4 = 75000;
 	static final int INCOME_TIER_5 = 100000;
 	
-	static final double MATCHING_INCOME_POINTS = 10;
+	static final double INCOME_RATING_BASE_NEAR = 1.25;
+	static final double INCOME_RATING_BASE_FAR  = 1.50;
+	static final double INCOME_RATING_BASE_FARTHEST = 2.50;
+	static final double INCOME_RATING_DIFFERENCE_NEAR = 30000;
+	static final double INCOME_RATING_DIFFERENCE_FAR  = 45000;
+	static final double INCOME_RATING_DIVIDEND  = 10000;
+	
+	static final double MATCHING_INCOME_POINTS = 15;
 	
 	
 	// Algorithm input: "Age Range"
@@ -51,6 +60,13 @@ public final class Common {
 	static final double AGE_TIER_4 = 40;
 	static final double AGE_TIER_5 = 50;
 	static final double AGE_TIER_6 = 60;
+	
+	static final double AGE_RATING_BASE_NEAR = 1.50;
+	static final double AGE_RATING_BASE_FAR  = 2.0;
+	static final double AGE_RATING_BASE_FARTHEST = 3.50;
+	static final double AGE_RATING_DIFFERENCE_NEAR = 12.5;
+	static final double AGE_RATING_DIFFERENCE_FAR  = 20.0;
+	static final double AGE_RATING_DIVIDEND  = 7.5;
 	
 	static final double MATCHING_AGE_POINTS = 15;
 	
