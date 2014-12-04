@@ -17,34 +17,19 @@ public class Zone {
 	// How good of a match is this zone?
 	private double rating = -1.0;
 	
-	// Census data
-    private int medianIncome;
-    private double medianAge;
-    private int numSingle;
-    private int numMarried;
+	// Contains the census data for this zone
+	Fips fipsZone = null;
 	
 	
 	/**
 	 * Create new zone
-	 * @param latitude lat of center point
-	 * @param longitude long of center point
-	 * @param rating how good a match this zone is to query
-	 * @param itsEducationData this zone's education data
-	 * @param itsCensusData this zone's census data
+	 * @param location the coordinates of the center point
 	 * @throws IOException 
 	 * @throws JSONException 
 	 */
 	public Zone(Coordinates location) throws JSONException, IOException {
 		super();
 		this.location = location;
-		
-		String fips = FccAPI.getFIPSCode(location);
-		CensusAPI census = new CensusAPI(fips);
-		
-		setMedianIncome(census.getMedianIncome());
-		setMedianAge(census.getMedianAge());
-		setNumSingle(census.getNumSingle());
-		setNumMarried(census.getNumMarried());
 	}
 
 	/**
@@ -69,34 +54,42 @@ public class Zone {
 	}
 
 	public int getMedianIncome() {
-		return medianIncome;
+		return fipsZone.getMedianIncome();
 	}
 
 	public void setMedianIncome(int medianIncome) {
-		this.medianIncome = medianIncome;
+		fipsZone.setMedianIncome(medianIncome);;
 	}
 
 	public double getMedianAge() {
-		return medianAge;
+		return fipsZone.getMedianAge();
 	}
 
 	public void setMedianAge(double medianAge) {
-		this.medianAge = medianAge;
+		fipsZone.setMedianAge(medianAge);
 	}
 
 	public int getNumSingle() {
-		return numSingle;
+		return fipsZone.getNumSingle();
 	}
 
 	public void setNumSingle(int numSingle) {
-		this.numSingle = numSingle;
+		fipsZone.setNumSingle(numSingle);
 	}
 
 	public int getNumMarried() {
-		return numMarried;
+		return fipsZone.getNumMarried();
 	}
 
 	public void setNumMarried(int numMarried) {
-		this.numMarried = numMarried;
+		fipsZone.setNumMarried(numMarried);
+	}
+	
+	public Fips getFips() {
+		return fipsZone;
+	}
+	
+	public void setFips(Fips fipsZone) {
+		this.fipsZone = fipsZone;
 	}
 }

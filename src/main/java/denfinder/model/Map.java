@@ -25,7 +25,8 @@ public class Map {
 	String address;
 	
 	private SchoolSet schoolList = new SchoolSet();
-
+	private FipsSet   fipsList   = new FipsSet();
+	
 	//create new list
 	public Map(String address, String newIncome, String newRelationshipStatus,
 									   String newAge, String newSchoolImportance) throws JSONException, IOException {
@@ -42,7 +43,7 @@ public class Map {
 		double latDiff = (topRight.getLatitude() - bottomLeft.getLatitude()) / Common.MAP_DIVISIONS;
 		double lonDiff = (topRight.getLongitude() - bottomLeft.getLongitude()) / Common.MAP_DIVISIONS;
 		
-		System.out.println(" " + latDiff + " " + lonDiff);
+		//System.out.println(" " + latDiff + " " + lonDiff);
 		
 		//get all states currently in viewport (all corners and center of viewpoint are tested)
 		Coordinates topLeft = new Coordinates(bottomLeft.latitude,topRight.longitude);
@@ -62,11 +63,34 @@ public class Map {
 				
 		schoolList.populate(states);
 		
+		Coordinates nextLocation = null;
+		Fips nextFips = null;
+		Zone nextZone = null;
+		
 		for (int i = 0; i < Common.MAP_DIVISIONS; i++) {
 			ArrayList<Zone> longitudes = new ArrayList<Zone>();
 			for (int j = 0; j < Common.MAP_DIVISIONS; j++) {
-				longitudes.add(new Zone(new Coordinates(bottomLeft.getLatitude() + latDiff * i,
-														bottomLeft.getLongitude() + lonDiff * j)));
+				nextLocation = new Coordinates(bottomLeft.getLatitude() + latDiff * i,
+											   bottomLeft.getLongitude() + lonDiff * j);
+
+				String fipsCode = FccAPI.getFIPSCode(nextLocation);
+				if (!fipsList.contains(fipsCode)) {
+					nextFips = new Fips(fipsCode);
+					fipsList.add(nextFips);
+					
+					System.out.println("Adding new fips " + fipsCode);
+				}
+				else {
+					nextFips = fipsList.getFips(fipsCode);
+					
+					System.out.println("Already have fips " + fipsCode + ", skipping");
+
+				}
+				
+				nextZone = new Zone(nextLocation);
+				nextZone.setFips(nextFips);
+				
+				longitudes.add(nextZone);
 			}
 			map.add(longitudes);
 		}
@@ -103,6 +127,10 @@ public class Map {
 
 	public SchoolSet getSchoolList() {
 		return this.schoolList;
+	}
+	
+	public FipsSet getFipsList() {
+		return this.fipsList;
 	}
 	
 
@@ -315,7 +343,7 @@ public class Map {
 
 		// DEBUG output
 		System.out.println("Zone: " + aZone.getLocation().getLongitude() + ", " + aZone.getLocation().getLatitude() + '\n' +
-						   "----------" + 
+						   "----------" + '\n' +
 						   "Income score: " + incomePoints + '\n' +
 						   "Age score: " + agePoints + '\n' +
 						   "Relationship score: " + relationshipPoints + '\n' +

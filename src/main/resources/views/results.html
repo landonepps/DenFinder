@@ -41,7 +41,7 @@
                 /*var dataPoint = {location: new google.maps.LatLng(map[i][j].location.latitude, map[i][j].location.longitude), weight: map[i][j].rating};*/
                 var dataPoint = {
                     location: new google.maps.LatLng(map[i][j].location.latitude, map[i][j].location.longitude),
-                    weight: map[i][j].rating / 500
+                    weight: map[i][j].rating / 1000
                 };
                 ratingData.push(dataPoint);
             }
@@ -63,15 +63,15 @@
 
             map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
             
-            for (var i = 0; i < schools.length; i++) {
-            	var latLng = new google.maps.LatLng(schools[i].location.latitude, schools[i].location.longitude);
-            	var marker = new google.maps.Marker({
-            		position: latLng,
-            		map: map,
-            		animation:google.maps.Animation.DROP,
-            		title: schools[i].name
-            	});
-            }
+            //for (var i = 0; i < schools.length; i++) {
+            //	var latLng = new google.maps.LatLng(schools[i].location.latitude, schools[i].location.longitude);
+            //	var marker = new google.maps.Marker({
+            //		position: latLng,
+            //		map: map,
+            //		animation:google.maps.Animation.DROP,
+            //		title: schools[i].name
+            //	});
+            //}
 
             //fit to bounds
             var bounds = new google.maps.LatLngBounds();
